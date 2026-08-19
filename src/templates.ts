@@ -4,7 +4,7 @@ export interface GenuiSpec {
   items: unknown[]
 }
 
-export const TEMPLATE_IDS = ['bootstrap', 'a', 'b', 'c', 'd'] as const
+export const TEMPLATE_IDS = ['bootstrap', 'a', 'b', 'c', 'd', 'e'] as const
 export type TemplateId = typeof TEMPLATE_IDS[number]
 
 export interface TemplateOption {
@@ -21,6 +21,7 @@ export const TEMPLATE_OPTIONS: readonly TemplateOption[] = [
   { id: 'b', label: 'B · 极简专注', description: '简洁、低干扰' },
   { id: 'c', label: 'C · 专业工作', description: '稳重、通用' },
   { id: 'd', label: 'D · 星舰科技', description: '科技、未来感' },
+  { id: 'e', label: 'E · 温暖陪伴', description: '温柔、治愈' },
 ]
 
 export function createBootstrapSpec(cardTitle: string): GenuiSpec {
@@ -123,6 +124,27 @@ export function createTemplateDSpec(cardTitle: string): GenuiSpec {
   }
 }
 
+export function createTemplateESpec(cardTitle: string): GenuiSpec {
+  return {
+    title: cardTitle,
+    gap: 10,
+    items: [{
+      type: 'card', title: '☕ 暖心小站', items: [
+        {
+          type: 'row', gap: 8, items: [
+            { type: 'stat', label: 'Mood', value: '🥰 温柔' },
+            { type: 'stat', label: 'Company', value: '🫶 陪伴中' },
+            { type: 'stat', label: 'Warmth', value: '🌤️ 98%' },
+          ],
+        },
+        { type: 'badge', label: '安心陪伴模式', tone: 'success', icon: '🍀' },
+        { type: 'progress', label: '默契度', value: 94, valueLabel: '94%' },
+        { type: 'text', size: 'muted', content: '慢慢来，我会陪你一起把事情做好。', center: true },
+      ],
+    }],
+  }
+}
+
 export function createTemplateSpec(template: TemplateId, cardTitle: string): GenuiSpec {
   switch (template) {
     case 'bootstrap': return createBootstrapSpec(cardTitle)
@@ -130,5 +152,6 @@ export function createTemplateSpec(template: TemplateId, cardTitle: string): Gen
     case 'b': return createTemplateBSpec(cardTitle)
     case 'c': return createTemplateCSpec(cardTitle)
     case 'd': return createTemplateDSpec(cardTitle)
+    case 'e': return createTemplateESpec(cardTitle)
   }
 }
