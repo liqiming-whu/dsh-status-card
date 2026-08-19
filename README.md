@@ -1,4 +1,4 @@
-# dsh-status-card
+<h1 align="center">dsh-status-card</h1>
 
 <p align="center">
   <strong>为 DeepSeek Harness 的每次 Agent 回复添加精美、动态的 dsh-ui 状态卡片</strong>
@@ -16,6 +16,7 @@
 - 内置六款模板：A 软萌活力、B 极简专注、C 专业工作、D 星舰科技、E 温暖陪伴、F 开发者终端。
 - 支持启用开关、自定义卡片标题和自定义 GenUI JSON 模板。
 - 设置页提供实时卡片预览和自定义模板校验。
+- 自动检测浏览器首选语言：首选语言以 `zh` 开头时，设置界面、内置模板和系统提示注入使用中文；其他语言统一使用英文。
 - 自定义模板限制为 64 KiB，必须包含非空 `items` 数组。
 
 ## 六款模板预览
@@ -95,7 +96,9 @@ dsh plugin --profile web add ./dsh-status-card-0.1.0.tgz
 4. 选择“自定义模板”以编辑严格的 GenUI JSON。
 5. 在设置页查看实时预览，校验通过后保存。
 
-设置会通过 DSH Settings 服务持久化。**安装插件或修改设置后，请新建一个会话才能生效；已有会话不保证应用新的状态卡片配置。**
+浏览器端会读取 `navigator.languages`（并以 `navigator.language` 作为回退），把检测结果同步到 DSH Settings：首选语言以 `zh` 开头时使用中文，否则使用英文。设置页会立即按浏览器语言显示，对应语言的系统提示和模板将在模型请求中使用。
+
+设置会通过 DSH Settings 服务持久化。**安装插件、切换浏览器语言或修改设置后，请新建一个会话才能生效；已有会话不保证应用新的状态卡片配置。**
 
 ## 注入机制
 

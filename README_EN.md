@@ -1,4 +1,4 @@
-# dsh-status-card
+<h1 align="center">dsh-status-card</h1>
 
 <p align="center">
   <strong>Add a polished, dynamic dsh-ui status card before every DeepSeek Harness agent reply</strong>
@@ -16,6 +16,7 @@
 - Includes six templates: A Soft Vitality, B Minimal Focus, C Professional Work, D Neural Deck, E Warm Companion, and F Developer Runtime.
 - Supports enable/disable, custom titles, and custom GenUI JSON templates.
 - Provides a live settings preview and custom-template validation.
+- Automatically detects the browser's preferred language: languages beginning with `zh` use Chinese for settings, built-in templates, and system-prompt injection; all other languages use English.
 - Limits custom templates to 64 KiB and requires a non-empty `items` array.
 
 ## Six template previews
@@ -89,7 +90,9 @@ dsh plugin --profile web add ./dsh-status-card-0.1.0.tgz
 
 Open **Settings → Status Card** to enable the card, change its title, select template A–F, edit strict custom GenUI JSON, and inspect the live preview before saving.
 
-Settings are persisted through the DSH Settings service. **After installing the plugin or changing its settings, start a new conversation for the changes to take effect; existing conversations are not guaranteed to use the new status-card configuration.**
+The browser reads `navigator.languages` (falling back to `navigator.language`) and synchronizes the detected locale to DSH Settings. Preferred languages beginning with `zh` select Chinese; every other language selects English. The settings UI switches immediately, and the matching system prompt and templates are used for model requests.
+
+Settings are persisted through the DSH Settings service. **After installing the plugin, changing the browser language, or changing settings, start a new conversation for the changes to take effect; existing conversations are not guaranteed to use the new status-card configuration.**
 
 ## Injection design
 

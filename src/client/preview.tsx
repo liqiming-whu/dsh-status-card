@@ -1,5 +1,5 @@
 import React from 'react'
-import type { GenuiSpec } from '../templates.ts'
+import type { GenuiSpec, Locale } from '../templates.ts'
 
 const surface: React.CSSProperties = {
   display: 'flex',
@@ -28,12 +28,12 @@ function text(value: unknown): string {
   return typeof value === 'string' || typeof value === 'number' ? String(value) : ''
 }
 
-function PreviewNode({ value, depth = 0 }: { value: unknown; depth?: number }) {
+function PreviewNode({ value, locale, depth = 0 }: { value: unknown; locale: Locale; depth?: number }) {
   const node = record(value)
   if (node === null || depth > 8) return null
   const type = text(node.type)
   const children = Array.isArray(node.items)
-    ? node.items.map((item, index) => <PreviewNode key={index} value={item} depth={depth + 1} />)
+    ? node.items.map((item, index) => <PreviewNode key={index} value={item} locale={locale} depth={depth + 1} />)
     : null
 
   if (type === 'card') return <div style={surface}>{node.title ? <strong>{text(node.title)}</strong> : null}{children}</div>
@@ -51,9 +51,9 @@ function PreviewNode({ value, depth = 0 }: { value: unknown; depth?: number }) {
   if (type === 'spacer') return <div style={{ height: 8 }} />
   if (type === 'list' && Array.isArray(node.items)) return <ul>{node.items.map((item, index) => <li key={index}>{text(record(item)?.title ?? item)}</li>)}</ul>
   if (type === 'keyvalue' && Array.isArray(node.pairs)) return <dl>{node.pairs.map((pair, index) => { const p = record(pair); return <div key={index} style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}><dt>{text(p?.key)}</dt><dd>{text(p?.value)}</dd></div> })}</dl>
-  return <div style={{ opacity: .65, fontSize: 12 }}>预览暂不支持组件：{type || 'unknown'}</div>
+  return <div style={{ opacity: .65, fontSize: 12 }}>{locale === 'zh' ? '预览暂不支持组件' : 'Preview does not support component'}：{type || 'unknown'}</div>
 }
 
-export function StatusCardPreview({ spec }: { spec: GenuiSpec }) {
-  return <div style={{ display: 'flex', flexDirection: 'column', gap: spec.gap ?? 10 }}>{spec.title ? <strong>{spec.title}</strong> : null}{spec.items.map((item, index) => <PreviewNode key={index} value={item} />)}</div>
+export function StatusCardPreview({ spec, locale }: { spec: GenuiSpec; locale: Locale }) {
+  return <div style={{ display: 'flex', flexDirection: 'column', gap: spec.gap ?? 10 }}>{spec.title ? <strong>{spec.title}</strong> : null}{spec.items.map((item, index) => <PreviewNode key={index} value={item} locale={locale} />)}</div>
 }

@@ -1,11 +1,15 @@
 import React, { useEffect, useState, useSyncExternalStore } from 'react'
 import type { ClientContext, SettingsScope } from '@deepseek-ai/dsh-client-runtime/client'
 import '@deepseek-ai/dsh-client-ui-settings/client'
+import { detectPreferredLocale } from '../locale.ts'
 import {
   createTemplateSpec,
+  defaultCardTitle,
   DEFAULT_CUSTOM_TEMPLATE,
+  getTemplateOptions,
+  localizeDefaultTitle,
   parseCustomTemplate,
-  TEMPLATE_OPTIONS,
+  type Locale,
   type TemplateId,
 } from '../templates.ts'
 import type { StatusCardSettings } from '../index.ts'
@@ -13,10 +17,42 @@ import { StatusCardPreview } from './preview.tsx'
 
 const defaults: StatusCardSettings = {
   enabled: true,
+  locale: 'zh',
   cardTitle: 'AI 状态',
   template: 'bootstrap',
   customTemplate: DEFAULT_CUSTOM_TEMPLATE,
 }
+
+const messages = {
+  zh: {
+    title: '状态卡片',
+    description: '在每次 Agent 回复开头注入 dsh-ui 状态卡片格式要求。注入位于系统提示组装层，不写入对话历史。',
+    enabled: '启用回复状态卡片',
+    cardTitle: '卡片标题',
+    titlePlaceholder: '例如：AI 状态',
+    template: '模板',
+    customJson: '自定义 dsh-ui JSON',
+    saveCustom: '保存自定义模板',
+    saved: '已保存。请新建会话以应用自定义模板。',
+    titleOverride: '标题由上方“卡片标题”统一覆盖。',
+    preview: '实时渲染预览',
+    previewLabel: '状态卡片预览',
+  },
+  en: {
+    title: 'Status Card',
+    description: 'Inject a dsh-ui status-card format requirement at the start of every agent reply. The instruction is assembled in the system prompt and is not written to conversation history.',
+    enabled: 'Enable reply status cards',
+    cardTitle: 'Card title',
+    titlePlaceholder: 'For example: AI Status',
+    template: 'Template',
+    customJson: 'Custom dsh-ui JSON',
+    saveCustom: 'Save custom template',
+    saved: 'Saved. Start a new conversation to apply the custom template.',
+    titleOverride: 'The “Card title” field above overrides the template title.',
+    preview: 'Live rendered preview',
+    previewLabel: 'Status card preview',
+  },
+} as const
 
 function decode(value: unknown): StatusCardSettings | undefined {
   if (value === null || typeof value !== 'object') return undefined
@@ -39,18 +75,25 @@ const panelStyle: React.CSSProperties = {
   borderRadius: 12,
 }
 
-function StatusCardSettingsSection({ scope }: { scope: SettingsScope<StatusCardSettings> }) {
+function StatusCardSettingsSection({ scope, browserLocale }: { scope: SettingsScope<StatusCardSettings>; browserLocale: Locale }) {
   const state = useSyncExternalStore(
     scope.subscribe.bind(scope),
     scope.getSnapshot.bind(scope),
   )
   const settings = state.value ?? defaults
+  const locale = browserLocale
+  const text = messages[locale]
+  const templateOptions = getTemplateOptions(locale)
   const [customDraft, setCustomDraft] = useState(settings.customTemplate)
   const [saveStatus, setSaveStatus] = useState('')
+
   useEffect(() => setCustomDraft(settings.customTemplate), [settings.customTemplate])
+  useEffect(() => {
+    if (state.writable && settings.locale !== browserLocale) void scope.set('locale', browserLocale)
+  }, [browserLocale, scope, settings.locale, state.writable])
 
   const set = <K extends keyof StatusCardSettings>(key: K, value: StatusCardSettings[K]) => void scope.set(key, value)
-  const title = settings.cardTitle.trim() || defaults.cardTitle
+  const title = localizeDefaultTitle(settings.cardTitle.trim() || defaultCardTitle(locale), locale)
 
   let preview: React.ReactNode
   let previewError = ''
@@ -59,8 +102,9 @@ function StatusCardSettingsSection({ scope }: { scope: SettingsScope<StatusCardS
       settings.template,
       title,
       settings.template === 'custom' ? customDraft : settings.customTemplate,
+      locale,
     )
-    preview = <StatusCardPreview spec={previewSpec} />
+    preview = <StatusCardPreview spec={previewSpec} locale={locale} />
   } catch (error) {
     previewError = error instanceof Error ? error.message : String(error)
     preview = null
@@ -68,19 +112,19 @@ function StatusCardSettingsSection({ scope }: { scope: SettingsScope<StatusCardS
 
   const saveCustomTemplate = async () => {
     try {
-      parseCustomTemplate(customDraft, title)
+      parseCustomTemplate(customDraft, title, locale)
       await scope.set('customTemplate', customDraft)
-      setSaveStatus('已保存，自定义模板会立即用于后续回复。')
+      setSaveStatus(text.saved)
     } catch (error) {
       setSaveStatus(error instanceof Error ? error.message : String(error))
     }
   }
 
   return (
-    <section style={sectionStyle}>
+    <section style={sectionStyle} lang={locale === 'zh' ? 'zh-CN' : 'en'}>
       <div>
-        <h2 style={{ margin: 0 }}>状态卡片</h2>
-        <p style={{ marginBottom: 0 }}>在每次 Agent 回复开头注入 dsh-ui 状态卡片格式要求。注入位于系统提示组装层，不写入对话历史。</p>
+        <h2 style={{ margin: 0 }}>{text.title}</h2>
+        <p style={{ marginBottom: 0 }}>{text.description}</p>
       </div>
 
       <div style={panelStyle}>
@@ -91,30 +135,30 @@ function StatusCardSettingsSection({ scope }: { scope: SettingsScope<StatusCardS
             disabled={!state.writable}
             onChange={event => set('enabled', event.target.checked)}
           />{' '}
-          启用回复状态卡片
+          {text.enabled}
         </label>
 
         <label>
-          卡片标题
+          {text.cardTitle}
           <input
-            value={settings.cardTitle}
+            value={title}
             disabled={!state.writable}
             maxLength={80}
-            placeholder="例如：AI 状态"
+            placeholder={text.titlePlaceholder}
             onChange={event => set('cardTitle', event.target.value)}
             style={{ display: 'block', width: '100%', marginTop: 6 }}
           />
         </label>
 
         <label>
-          模板
+          {text.template}
           <select
             value={settings.template}
             disabled={!state.writable}
             onChange={event => set('template', event.target.value as TemplateId)}
             style={{ display: 'block', width: '100%', marginTop: 6 }}
           >
-            {TEMPLATE_OPTIONS.map(option => (
+            {templateOptions.map(option => (
               <option key={option.id} value={option.id}>{option.label} · {option.description}</option>
             ))}
           </select>
@@ -123,7 +167,7 @@ function StatusCardSettingsSection({ scope }: { scope: SettingsScope<StatusCardS
         {settings.template === 'custom' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             <label>
-              自定义 dsh-ui JSON
+              {text.customJson}
               <textarea
                 value={customDraft}
                 disabled={!state.writable}
@@ -135,10 +179,10 @@ function StatusCardSettingsSection({ scope }: { scope: SettingsScope<StatusCardS
             </label>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
               <button type="button" disabled={!state.writable || Boolean(previewError)} onClick={() => void saveCustomTemplate()}>
-                保存自定义模板
+                {text.saveCustom}
               </button>
               <span style={{ color: previewError ? 'var(--dsw-alias-color-danger, #d33)' : undefined }}>
-                {previewError || saveStatus || '标题由上方“卡片标题”统一覆盖。'}
+                {previewError || saveStatus || text.titleOverride}
               </span>
             </div>
           </div>
@@ -146,10 +190,10 @@ function StatusCardSettingsSection({ scope }: { scope: SettingsScope<StatusCardS
       </div>
 
       <div style={panelStyle}>
-        <strong>实时渲染预览</strong>
+        <strong>{text.preview}</strong>
         {previewError
           ? <div role="alert" style={{ color: 'var(--dsw-alias-color-danger, #d33)' }}>{previewError}</div>
-          : <div aria-label="状态卡片预览">{preview}</div>}
+          : <div aria-label={text.previewLabel}>{preview}</div>}
       </div>
     </section>
   )
@@ -158,6 +202,7 @@ function StatusCardSettingsSection({ scope }: { scope: SettingsScope<StatusCardS
 export const inject = ['slots', 'settingsScope']
 
 export function apply(ctx: ClientContext): void {
+  const browserLocale = detectPreferredLocale(globalThis.navigator?.languages, globalThis.navigator?.language)
   const scope = ctx.settingsScope.bind<StatusCardSettings>({
     namespace: 'status-card',
     decode,
@@ -166,7 +211,7 @@ export function apply(ctx: ClientContext): void {
     name: 'settings.section',
     id: 'status-card',
     order: 36,
-    label: () => '状态卡片',
-    inject: () => ({ scope }),
+    label: () => messages[browserLocale].title,
+    inject: () => ({ scope, browserLocale }),
   }, StatusCardSettingsSection as never))
 }
