@@ -1,30 +1,105 @@
 # dsh-status-card
 
-A DeepSeek Harness plugin that asks the agent to render a short, dynamic `dsh-ui` status card before every reply.
+<p align="center">
+  <strong>Add a polished, dynamic dsh-ui status card before every DeepSeek Harness agent reply</strong>
+</p>
 
-## Design
+<p align="center">
+  <a href="./README.md">简体中文</a> · English
+</p>
 
-- Registers the reply-format instruction through `ctx.systemPrompt.section()`.
-- Does **not** call `agent.inject()`, register prompt contexts, or append session messages; therefore the instruction does not become user/assistant conversation history.
+## Features
+
+- Renders an inline `dsh-ui` status card at the beginning of every agent reply.
+- Injects formatting guidance through `ctx.systemPrompt.section()` without appending user or assistant conversation-history events.
 - Uses emoji instead of Material Icons.
-- Depends on `@omdsh-dev/dsh-genui` for inline fence rendering. The GenUI plugin must also be mounted in the Web profile; this bundle deliberately does not insert a second GenUI row, avoiding duplicate tool and client registrations when GenUI is already installed.
-- The settings preview is implemented locally instead of importing GenUI client values, respecting DSH client-bundle purity. Unsupported custom components are identified in the preview while the real conversation renderer remains GenUI.
+- Includes six templates: A Soft Vitality, B Minimal Focus, C Professional Work, D Neural Deck, E Warm Companion, and F Developer Runtime.
+- Supports enable/disable, custom titles, and custom GenUI JSON templates.
+- Provides a live settings preview and custom-template validation.
+- Limits custom templates to 64 KiB and requires a non-empty `items` array.
 
-## Settings
+## Requirements
 
-Open **Settings → Status Card** to:
+- DeepSeek Harness installed.
+- `pnpm` available on `PATH`.
+- [`@omdsh-dev/dsh-genui`](https://github.com/omdsh-dev/dsh-genui) installed and mounted in the Web profile.
 
-- enable or disable the card;
-- change its title;
-- select built-in template A–F (plus the bootstrap template);
-- edit a custom GenUI JSON template;
-- preview the rendered result live before saving.
+Project dependency:
 
-Custom templates must be a JSON object with a non-empty `items` array and must be no larger than 64 KiB. The separate card-title setting overrides the custom template root title.
+```json
+"@omdsh-dev/dsh-genui": "github:omdsh-dev/dsh-genui"
+```
 
-## Development
+> pnpm 11 enables `blockExoticSubdeps` by default. Because this project and GenUI use GitHub dependencies, add `blockExoticSubdeps: false` at the top level of `~/.dsh/profiles/web/pnpm-workspace.yaml`. This setting is independent of `allowBuilds`.
+
+## Install from GitHub
+
+### 1. Install GenUI
 
 ```sh
+dsh plugin --profile web add "git+https://github.com/omdsh-dev/dsh-genui.git"
+```
+
+### 2. Install dsh-status-card
+
+Pin the stable release (recommended):
+
+```sh
+dsh plugin --profile web add "git+https://github.com/liqiming-whu/dsh-status-card.git#v0.1.0"
+```
+
+Install the latest main branch:
+
+```sh
+dsh plugin --profile web add "git+https://github.com/liqiming-whu/dsh-status-card.git"
+```
+
+Restart `dsh web` after installation and hard-refresh the browser page.
+
+## Install from a Release tarball
+
+Download `dsh-status-card-0.1.0.tgz` from [Releases](https://github.com/liqiming-whu/dsh-status-card/releases), then run:
+
+```sh
+dsh plugin --profile web add ./dsh-status-card-0.1.0.tgz
+```
+
+## Usage
+
+Open **Settings → Status Card** to enable the card, change its title, select template A–F, edit strict custom GenUI JSON, and inspect the live preview before saving.
+
+Settings are persisted through the DSH Settings service and apply to later model requests.
+
+## Injection design
+
+The plugin registers a system-prompt section:
+
+```ts
+ctx.systemPrompt.section({
+  name: 'status-card',
+  order: 90,
+  text: () => buildStatusCardInstruction(settings),
+})
+```
+
+It does not call `agent.inject()`, register `systemPrompt.context()`, or append `user/message` / `assistant/message` events, so the formatting instruction does not accumulate in conversation history.
+
+## Development and tests
+
+```sh
+git clone https://github.com/liqiming-whu/dsh-status-card.git
+cd dsh-status-card
 pnpm install
 pnpm run check
+pnpm pack
 ```
+
+Tests cover non-history prompt injection, the Web settings bundle, templates A–F, custom JSON validation, client-bundle purity, and Host/browser builds.
+
+## Preview note
+
+The settings preview is implemented locally rather than importing GenUI client values across plugin boundaries, preserving DSH client-bundle purity. Real conversation `dsh-ui` fences are rendered by GenUI.
+
+## License
+
+[MIT](./LICENSE)
