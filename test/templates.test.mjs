@@ -15,5 +15,6 @@ function inspect(id, expectedParts) {
 
 inspect('bootstrap', ['✅', '🧠', '⚡'])
 inspect('a', ['🌸 AI 状态', '😊 开心', '🐾 陪伴中', '🌟', '可爱度'])
-assert.deepEqual(TEMPLATE_OPTIONS.map(option => option.id), ['bootstrap', 'a'])
-console.log('template A tests passed')
+inspect('b', ['🧭 Focus', '🟢', '🎯', '当前任务', '正在专注处理你的请求。'])
+assert.deepEqual(TEMPLATE_OPTIONS.map(option => option.id), ['bootstrap', 'a', 'b'])
+console.log('templates A-B tests passed')
