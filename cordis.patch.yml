@@ -1,0 +1,9 @@
+- insert:
+    - id: status-card-genui
+      name: '@omdsh-dev/dsh-genui'
+    - id: status-card
+      name: dsh-status-card
+      config:
+        enabled: true
+        cardTitle: AI 状态
+        sectionOrder: 90
