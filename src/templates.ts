@@ -4,7 +4,7 @@ export interface GenuiSpec {
   items: unknown[]
 }
 
-export const TEMPLATE_IDS = ['bootstrap', 'a', 'b'] as const
+export const TEMPLATE_IDS = ['bootstrap', 'a', 'b', 'c'] as const
 export type TemplateId = typeof TEMPLATE_IDS[number]
 
 export interface TemplateOption {
@@ -19,6 +19,7 @@ export const TEMPLATE_OPTIONS: readonly TemplateOption[] = [
   { id: 'bootstrap', label: '基础状态', description: '简短的通用状态提示' },
   { id: 'a', label: 'A · 软萌活力', description: '可爱、活泼' },
   { id: 'b', label: 'B · 极简专注', description: '简洁、低干扰' },
+  { id: 'c', label: 'C · 专业工作', description: '稳重、通用' },
 ]
 
 export function createBootstrapSpec(cardTitle: string): GenuiSpec {
@@ -79,10 +80,32 @@ export function createTemplateBSpec(cardTitle: string): GenuiSpec {
   }
 }
 
+export function createTemplateCSpec(cardTitle: string): GenuiSpec {
+  return {
+    title: cardTitle,
+    gap: 10,
+    items: [{
+      type: 'card', title: '🧠 Agent Console', items: [
+        {
+          type: 'row', gap: 8, items: [
+            { type: 'stat', label: 'Mode', value: '🔍 分析' },
+            { type: 'stat', label: 'Stage', value: '🛠️ 执行' },
+            { type: 'stat', label: 'Load', value: '⚡ 82%' },
+          ],
+        },
+        { type: 'badge', label: '状态正常', tone: 'success', icon: '✅' },
+        { type: 'progress', label: '任务进度', value: 72, valueLabel: '72%' },
+        { type: 'text', size: 'muted', content: '正在核对细节并生成可靠结果。', center: true },
+      ],
+    }],
+  }
+}
+
 export function createTemplateSpec(template: TemplateId, cardTitle: string): GenuiSpec {
   switch (template) {
     case 'bootstrap': return createBootstrapSpec(cardTitle)
     case 'a': return createTemplateASpec(cardTitle)
     case 'b': return createTemplateBSpec(cardTitle)
+    case 'c': return createTemplateCSpec(cardTitle)
   }
 }
