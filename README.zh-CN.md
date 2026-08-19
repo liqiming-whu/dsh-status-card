@@ -7,7 +7,7 @@
 - 通过 `ctx.systemPrompt.section()` 注册回复格式指令。
 - **不**调用 `agent.inject()`、不注册动态提示上下文、不追加会话消息，因此指令不会成为用户/助手对话历史。
 - 使用 emoji 代替 Material Icons。
-- 依赖 `@omdsh-dev/dsh-genui` 完成围栏内联渲染。
+- 依赖 `@omdsh-dev/dsh-genui` 完成围栏内联渲染；同时需要在 Web profile 中挂载 GenUI 插件。本 bundle 不会再次插入 GenUI 行，以免用户已经安装 GenUI 时重复注册工具和客户端模块。
 
 ## 设置
 
