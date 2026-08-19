@@ -22,7 +22,7 @@
 
 - 已安装 DeepSeek Harness。
 - `pnpm` 可从终端运行。
-- Web profile 已安装并启用 [`@omdsh-dev/dsh-genui`](https://github.com/omdsh-dev/dsh-genui)。
+- Web profile 已安装并启用 [`@omdsh-dev/dsh-genui`](https://github.com/omdsh-dev/dsh-genui)。该依赖已经发布到 **dsh-market 插件市场**，可以直接在市场中搜索并下载安装，无需手动输入 GitHub 地址。
 
 本项目依赖：
 
@@ -35,6 +35,8 @@
 ## 从 GitHub 安装
 
 ### 1. 安装 GenUI
+
+可以直接打开 **dsh-market 插件市场**，搜索 `@omdsh-dev/dsh-genui` 并点击安装；也可以使用命令行：
 
 ```sh
 dsh plugin --profile web add "git+https://github.com/omdsh-dev/dsh-genui.git"
@@ -74,7 +76,7 @@ dsh plugin --profile web add ./dsh-status-card-0.1.0.tgz
 4. 选择“自定义模板”以编辑严格的 GenUI JSON。
 5. 在设置页查看实时预览，校验通过后保存。
 
-设置会通过 DSH Settings 服务持久化，并对后续模型请求生效。
+设置会通过 DSH Settings 服务持久化。**安装插件或修改设置后，请新建一个会话才能生效；已有会话不保证应用新的状态卡片配置。**
 
 ## 注入机制
 

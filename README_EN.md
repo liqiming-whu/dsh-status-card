@@ -22,7 +22,7 @@
 
 - DeepSeek Harness installed.
 - `pnpm` available on `PATH`.
-- [`@omdsh-dev/dsh-genui`](https://github.com/omdsh-dev/dsh-genui) installed and mounted in the Web profile.
+- [`@omdsh-dev/dsh-genui`](https://github.com/omdsh-dev/dsh-genui) installed and mounted in the Web profile. This dependency is also published in the **dsh-market plugin marketplace**, where it can be searched for and installed directly without entering a GitHub URL.
 
 Project dependency:
 
@@ -35,6 +35,8 @@ Project dependency:
 ## Install from GitHub
 
 ### 1. Install GenUI
+
+Open the **dsh-market plugin marketplace**, search for `@omdsh-dev/dsh-genui`, and install it directly; alternatively, use the command line:
 
 ```sh
 dsh plugin --profile web add "git+https://github.com/omdsh-dev/dsh-genui.git"
@@ -68,7 +70,7 @@ dsh plugin --profile web add ./dsh-status-card-0.1.0.tgz
 
 Open **Settings → Status Card** to enable the card, change its title, select template A–F, edit strict custom GenUI JSON, and inspect the live preview before saving.
 
-Settings are persisted through the DSH Settings service and apply to later model requests.
+Settings are persisted through the DSH Settings service. **After installing the plugin or changing its settings, start a new conversation for the changes to take effect; existing conversations are not guaranteed to use the new status-card configuration.**
 
 ## Injection design
 
