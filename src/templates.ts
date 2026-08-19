@@ -4,7 +4,7 @@ export interface GenuiSpec {
   items: unknown[]
 }
 
-export const TEMPLATE_IDS = ['bootstrap', 'a', 'b', 'c', 'd', 'e', 'f'] as const
+export const TEMPLATE_IDS = ['bootstrap', 'a', 'b', 'c', 'd', 'e', 'f', 'custom'] as const
 export type TemplateId = typeof TEMPLATE_IDS[number]
 
 export interface TemplateOption {
@@ -23,7 +23,19 @@ export const TEMPLATE_OPTIONS: readonly TemplateOption[] = [
   { id: 'd', label: 'D · 星舰科技', description: '科技、未来感' },
   { id: 'e', label: 'E · 温暖陪伴', description: '温柔、治愈' },
   { id: 'f', label: 'F · 开发者终端', description: '编程、工程化' },
+  { id: 'custom', label: '自定义模板', description: '编辑 JSON 并实时预览' },
 ]
+
+export const DEFAULT_CUSTOM_TEMPLATE = JSON.stringify({
+  gap: 10,
+  items: [{
+    type: 'card', title: '🎨 我的状态', items: [
+      { type: 'badge', label: '自定义模式', tone: 'accent', icon: '✨' },
+      { type: 'progress', label: '当前进度', value: 60, valueLabel: '动态更新' },
+      { type: 'text', size: 'muted', content: '正在按自定义模板工作。', center: true },
+    ],
+  }],
+})
 
 export function createBootstrapSpec(cardTitle: string): GenuiSpec {
   return {
@@ -167,7 +179,27 @@ export function createTemplateFSpec(cardTitle: string): GenuiSpec {
   }
 }
 
-export function createTemplateSpec(template: TemplateId, cardTitle: string): GenuiSpec {
+export function parseCustomTemplate(raw: string, cardTitle: string): GenuiSpec {
+  if (new TextEncoder().encode(raw).byteLength > 64 * 1024) {
+    throw new Error('自定义模板不能超过 64 KiB')
+  }
+  let parsed: unknown
+  try {
+    parsed = JSON.parse(raw)
+  } catch (error) {
+    throw new Error(`自定义模板不是有效 JSON：${error instanceof Error ? error.message : String(error)}`)
+  }
+  if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
+    throw new Error('自定义模板根节点必须是对象')
+  }
+  const record = parsed as Record<string, unknown>
+  if (!Array.isArray(record.items) || record.items.length === 0) {
+    throw new Error('自定义模板必须包含非空 items 数组')
+  }
+  return { ...record, title: cardTitle, items: record.items } as GenuiSpec
+}
+
+export function createTemplateSpec(template: TemplateId, cardTitle: string, customTemplate = DEFAULT_CUSTOM_TEMPLATE): GenuiSpec {
   switch (template) {
     case 'bootstrap': return createBootstrapSpec(cardTitle)
     case 'a': return createTemplateASpec(cardTitle)
@@ -176,5 +208,6 @@ export function createTemplateSpec(template: TemplateId, cardTitle: string): Gen
     case 'd': return createTemplateDSpec(cardTitle)
     case 'e': return createTemplateESpec(cardTitle)
     case 'f': return createTemplateFSpec(cardTitle)
+    case 'custom': return parseCustomTemplate(customTemplate, cardTitle)
   }
 }

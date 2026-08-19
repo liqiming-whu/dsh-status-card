@@ -14,6 +14,8 @@ for (const expected of [
   '状态卡片',
   '卡片标题',
   '实时渲染预览',
+  '自定义 dsh-ui JSON',
+  '保存自定义模板',
   'renderGenuiFence',
   'status-card-settings-preview',
 ]) {

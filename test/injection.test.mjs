@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict'
 import fs from 'node:fs/promises'
-import { apply, buildStatusCardInstruction } from '../lib/index.js'
+import { apply, buildStatusCardInstruction, DEFAULT_CUSTOM_TEMPLATE } from '../lib/index.js'
 
-const config = { enabled: true, cardTitle: 'Agent 状态', template: 'bootstrap', sectionOrder: 90 }
+const config = { enabled: true, cardTitle: 'Agent 状态', template: 'bootstrap', customTemplate: DEFAULT_CUSTOM_TEMPLATE, sectionOrder: 90 }
 const prompt = buildStatusCardInstruction(config)
 assert.ok(prompt.startsWith('在每次回复正文的最开头'))
 assert.ok(prompt.includes('```dsh-ui'))

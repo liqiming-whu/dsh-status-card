@@ -1,14 +1,21 @@
-import React, { useSyncExternalStore } from 'react'
+import React, { useEffect, useState, useSyncExternalStore } from 'react'
 import type { ClientContext, SettingsScope } from '@deepseek-ai/dsh-client-runtime/client'
 import '@deepseek-ai/dsh-client-ui-settings/client'
 import { renderGenuiFence } from '@omdsh-dev/dsh-genui/client'
-import { createTemplateSpec, TEMPLATE_OPTIONS, type TemplateId } from '../templates.ts'
+import {
+  createTemplateSpec,
+  DEFAULT_CUSTOM_TEMPLATE,
+  parseCustomTemplate,
+  TEMPLATE_OPTIONS,
+  type TemplateId,
+} from '../templates.ts'
 import type { StatusCardSettings } from '../index.ts'
 
 const defaults: StatusCardSettings = {
   enabled: true,
   cardTitle: 'AI 状态',
   template: 'bootstrap',
+  customTemplate: DEFAULT_CUSTOM_TEMPLATE,
 }
 
 function decode(value: unknown): StatusCardSettings | undefined {
@@ -38,9 +45,36 @@ function StatusCardSettingsSection({ scope }: { scope: SettingsScope<StatusCardS
     scope.getSnapshot.bind(scope),
   )
   const settings = state.value ?? defaults
+  const [customDraft, setCustomDraft] = useState(settings.customTemplate)
+  const [saveStatus, setSaveStatus] = useState('')
+  useEffect(() => setCustomDraft(settings.customTemplate), [settings.customTemplate])
+
   const set = <K extends keyof StatusCardSettings>(key: K, value: StatusCardSettings[K]) => void scope.set(key, value)
-  const previewSpec = createTemplateSpec(settings.template, settings.cardTitle.trim() || defaults.cardTitle)
-  const preview = renderGenuiFence(JSON.stringify(previewSpec), 'status-card-settings-preview')
+  const title = settings.cardTitle.trim() || defaults.cardTitle
+
+  let preview: React.ReactNode
+  let previewError = ''
+  try {
+    const previewSpec = createTemplateSpec(
+      settings.template,
+      title,
+      settings.template === 'custom' ? customDraft : settings.customTemplate,
+    )
+    preview = renderGenuiFence(JSON.stringify(previewSpec), 'status-card-settings-preview')
+  } catch (error) {
+    previewError = error instanceof Error ? error.message : String(error)
+    preview = null
+  }
+
+  const saveCustomTemplate = async () => {
+    try {
+      parseCustomTemplate(customDraft, title)
+      await scope.set('customTemplate', customDraft)
+      setSaveStatus('已保存，自定义模板会立即用于后续回复。')
+    } catch (error) {
+      setSaveStatus(error instanceof Error ? error.message : String(error))
+    }
+  }
 
   return (
     <section style={sectionStyle}>
@@ -85,11 +119,37 @@ function StatusCardSettingsSection({ scope }: { scope: SettingsScope<StatusCardS
             ))}
           </select>
         </label>
+
+        {settings.template === 'custom' && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <label>
+              自定义 dsh-ui JSON
+              <textarea
+                value={customDraft}
+                disabled={!state.writable}
+                rows={12}
+                spellCheck={false}
+                onChange={event => { setCustomDraft(event.target.value); setSaveStatus('') }}
+                style={{ display: 'block', width: '100%', marginTop: 6, fontFamily: 'ui-monospace, monospace' }}
+              />
+            </label>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+              <button type="button" disabled={!state.writable || Boolean(previewError)} onClick={() => void saveCustomTemplate()}>
+                保存自定义模板
+              </button>
+              <span style={{ color: previewError ? 'var(--dsw-alias-color-danger, #d33)' : undefined }}>
+                {previewError || saveStatus || '标题由上方“卡片标题”统一覆盖。'}
+              </span>
+            </div>
+          </div>
+        )}
       </div>
 
       <div style={panelStyle}>
         <strong>实时渲染预览</strong>
-        <div aria-label="状态卡片预览">{preview}</div>
+        {previewError
+          ? <div role="alert" style={{ color: 'var(--dsw-alias-color-danger, #d33)' }}>{previewError}</div>
+          : <div aria-label="状态卡片预览">{preview}</div>}
       </div>
     </section>
   )

@@ -3,7 +3,7 @@ import type { AssembleContext } from '@deepseek-ai/dsh-system-prompt'
 import '@deepseek-ai/dsh-system-prompt'
 import z from '@deepseek-ai/schemastery'
 import { installSettingsSection, settingsNamespace } from '@deepseek-ai/dsh-settings'
-import { createTemplateSpec, TEMPLATE_IDS, type TemplateId } from './templates.ts'
+import { createBootstrapSpec, createTemplateSpec, DEFAULT_CUSTOM_TEMPLATE, parseCustomTemplate, TEMPLATE_IDS, type TemplateId } from './templates.ts'
 
 export const name = 'status-card'
 export const inject = ['systemPrompt']
@@ -13,6 +13,7 @@ export interface StatusCardSettings {
   enabled: boolean
   cardTitle: string
   template: TemplateId
+  customTemplate: string
 }
 
 export interface Config extends StatusCardSettings {
@@ -23,12 +24,14 @@ export const SettingsSchema: z<StatusCardSettings> = z.object({
   enabled: z.boolean().default(true),
   cardTitle: z.string().default('AI 状态'),
   template: z.union([...TEMPLATE_IDS]).default('bootstrap'),
+  customTemplate: z.string().default(DEFAULT_CUSTOM_TEMPLATE),
 })
 
 export const Config: z<Config> = z.object({
   enabled: z.boolean().default(true),
   cardTitle: z.string().default('AI 状态'),
   template: z.union([...TEMPLATE_IDS]).default('bootstrap'),
+  customTemplate: z.string().default(DEFAULT_CUSTOM_TEMPLATE),
   sectionOrder: z.number().default(90),
 })
 
@@ -38,7 +41,13 @@ function sanitizeTitle(value: string): string {
 
 export function buildStatusCardInstruction(settings: StatusCardSettings): string {
   if (!settings.enabled) return ''
-  const spec = createTemplateSpec(settings.template, sanitizeTitle(settings.cardTitle))
+  const title = sanitizeTitle(settings.cardTitle)
+  let spec
+  try {
+    spec = createTemplateSpec(settings.template, title, settings.customTemplate)
+  } catch {
+    spec = createBootstrapSpec(title)
+  }
   return [
     '在每次回复正文的最开头，先输出一个状态卡片，然后再正常回答。',
     '状态卡片必须使用 ```dsh-ui 围栏内联渲染；围栏内只能包含严格合法的 JSON，不得输出 HTML，不得使用 Material Icons。',
@@ -55,12 +64,16 @@ export function apply(ctx: Context, entry: Config): void {
     enabled: entry.enabled,
     cardTitle: entry.cardTitle,
     template: entry.template,
+    customTemplate: entry.customTemplate,
   }
   let source = (): StatusCardSettings => entrySettings
 
   installSettingsSection(ctx, SETTINGS_NAMESPACE, SettingsSchema, entrySettings, {
     setSource: current => { source = current },
     onChange: () => {},
+    validate: value => {
+      if (value.template === 'custom') parseCustomTemplate(value.customTemplate, sanitizeTitle(value.cardTitle))
+    },
   })
 
   ctx.effect(() => ctx.systemPrompt.section({
@@ -70,5 +83,5 @@ export function apply(ctx: Context, entry: Config): void {
   }))
 }
 
-export { createBootstrapSpec, createTemplateSpec, TEMPLATE_OPTIONS } from './templates.ts'
+export { createBootstrapSpec, createTemplateSpec, DEFAULT_CUSTOM_TEMPLATE, parseCustomTemplate, TEMPLATE_OPTIONS } from './templates.ts'
 export type { GenuiSpec, TemplateId, TemplateOption } from './templates.ts'
