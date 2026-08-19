@@ -4,7 +4,19 @@ export interface GenuiSpec {
   items: unknown[]
 }
 
-export const BOOTSTRAP_TEMPLATE_ID = 'bootstrap' as const
+export type TemplateId = 'bootstrap'
+
+export interface TemplateOption {
+  id: TemplateId
+  label: string
+  description: string
+}
+
+export const BOOTSTRAP_TEMPLATE_ID: TemplateId = 'bootstrap'
+
+export const TEMPLATE_OPTIONS: readonly TemplateOption[] = [
+  { id: BOOTSTRAP_TEMPLATE_ID, label: '基础状态', description: '简短的通用状态提示' },
+]
 
 export function createBootstrapSpec(cardTitle: string): GenuiSpec {
   return {
@@ -22,5 +34,12 @@ export function createBootstrapSpec(cardTitle: string): GenuiSpec {
       },
       { type: 'progress', label: '当前任务', value: 50, valueLabel: '动态更新' },
     ],
+  }
+}
+
+export function createTemplateSpec(template: TemplateId, cardTitle: string): GenuiSpec {
+  switch (template) {
+    case BOOTSTRAP_TEMPLATE_ID:
+      return createBootstrapSpec(cardTitle)
   }
 }
