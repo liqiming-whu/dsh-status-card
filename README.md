@@ -67,7 +67,7 @@ dsh plugin --profile web add "git+https://github.com/omdsh-dev/dsh-genui.git"
 推荐固定到稳定 Release：
 
 ```sh
-dsh plugin --profile web add "git+https://github.com/liqiming-whu/dsh-status-card.git#v0.1.0"
+dsh plugin --profile web add "git+https://github.com/liqiming-whu/dsh-status-card.git#v0.2.0"
 ```
 
 安装最新主分支：
@@ -80,10 +80,10 @@ dsh plugin --profile web add "git+https://github.com/liqiming-whu/dsh-status-car
 
 ## 从 Release 安装包安装
 
-从 [Releases](https://github.com/liqiming-whu/dsh-status-card/releases) 下载 `dsh-status-card-0.1.0.tgz`，然后执行：
+从 [Releases](https://github.com/liqiming-whu/dsh-status-card/releases) 下载 `dsh-status-card-0.2.0.tgz`，然后执行：
 
 ```sh
-dsh plugin --profile web add ./dsh-status-card-0.1.0.tgz
+dsh plugin --profile web add ./dsh-status-card-0.2.0.tgz
 ```
 
 ## 使用

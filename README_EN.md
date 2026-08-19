@@ -67,7 +67,7 @@ dsh plugin --profile web add "git+https://github.com/omdsh-dev/dsh-genui.git"
 Pin the stable release (recommended):
 
 ```sh
-dsh plugin --profile web add "git+https://github.com/liqiming-whu/dsh-status-card.git#v0.1.0"
+dsh plugin --profile web add "git+https://github.com/liqiming-whu/dsh-status-card.git#v0.2.0"
 ```
 
 Install the latest main branch:
@@ -80,10 +80,10 @@ Restart `dsh web` after installation and hard-refresh the browser page.
 
 ## Install from a Release tarball
 
-Download `dsh-status-card-0.1.0.tgz` from [Releases](https://github.com/liqiming-whu/dsh-status-card/releases), then run:
+Download `dsh-status-card-0.2.0.tgz` from [Releases](https://github.com/liqiming-whu/dsh-status-card/releases), then run:
 
 ```sh
-dsh plugin --profile web add ./dsh-status-card-0.1.0.tgz
+dsh plugin --profile web add ./dsh-status-card-0.2.0.tgz
 ```
 
 ## Usage

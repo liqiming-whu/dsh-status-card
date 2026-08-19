@@ -1,6 +1,6 @@
 {
   "name": "dsh-status-card",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Inject a configurable dsh-ui status card instruction before every DSH agent reply",
   "keywords": ["deepseek-harness", "dsh", "dsh-plugin", "genui", "status-card"],
   "repository": { "type": "git", "url": "git+https://github.com/liqiming-whu/dsh-status-card.git" },
