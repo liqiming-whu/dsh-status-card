@@ -1,28 +1,28 @@
 # dsh-status-card
 
-A DeepSeek Harness plugin that asks the agent to render a short, dynamic `dsh-ui` status card before every reply.
+一个 DeepSeek Harness 插件，要求 Agent 在每次回复前先内联渲染简短、动态的 `dsh-ui` 状态卡片。
 
-## Design
+## 设计
 
-- Registers the reply-format instruction through `ctx.systemPrompt.section()`.
-- Does **not** call `agent.inject()`, register prompt contexts, or append session messages; therefore the instruction does not become user/assistant conversation history.
-- Uses emoji instead of Material Icons.
-- Depends on `@omdsh-dev/dsh-genui` for inline fence rendering. The GenUI plugin must also be mounted in the Web profile; this bundle deliberately does not insert a second GenUI row, avoiding duplicate tool and client registrations when GenUI is already installed.
-- The settings preview is implemented locally instead of importing GenUI client values, respecting DSH client-bundle purity. Unsupported custom components are identified in the preview while the real conversation renderer remains GenUI.
+- 通过 `ctx.systemPrompt.section()` 注册回复格式指令。
+- **不**调用 `agent.inject()`、不注册动态提示上下文、不追加会话消息，因此指令不会成为用户/助手对话历史。
+- 使用 emoji 代替 Material Icons。
+- 依赖 `@omdsh-dev/dsh-genui` 完成围栏内联渲染；同时需要在 Web profile 中挂载 GenUI 插件。本 bundle 不会再次插入 GenUI 行，以免用户已经安装 GenUI 时重复注册工具和客户端模块。
+- 设置页预览由本插件本地实现，不跨插件导入 GenUI 客户端值，遵守 DSH 客户端 bundle 纯度约束；自定义模板中暂不支持的组件会在预览中明确提示，聊天中的真实渲染仍由 GenUI 完成。
 
-## Settings
+## 设置
 
-Open **Settings → Status Card** to:
+打开 **设置 → 状态卡片**，可以：
 
-- enable or disable the card;
-- change its title;
-- select built-in template A–F (plus the bootstrap template);
-- edit a custom GenUI JSON template;
-- preview the rendered result live before saving.
+- 启用或关闭卡片；
+- 修改卡片标题；
+- 选择内置 A–F 模板（以及基础模板）；
+- 编辑自定义 GenUI JSON；
+- 保存前实时查看渲染结果。
 
-Custom templates must be a JSON object with a non-empty `items` array and must be no larger than 64 KiB. The separate card-title setting overrides the custom template root title.
+自定义模板必须是包含非空 `items` 数组的 JSON 对象，大小不得超过 64 KiB。独立的“卡片标题”设置会覆盖自定义模板根标题。
 
-## Development
+## 开发
 
 ```sh
 pnpm install
