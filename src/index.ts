@@ -3,7 +3,7 @@ import type { AssembleContext } from '@deepseek-ai/dsh-system-prompt'
 import '@deepseek-ai/dsh-system-prompt'
 import z from '@deepseek-ai/schemastery'
 import { installSettingsSection, settingsNamespace } from '@deepseek-ai/dsh-settings'
-import { createTemplateSpec, type TemplateId } from './templates.ts'
+import { createTemplateSpec, TEMPLATE_IDS, type TemplateId } from './templates.ts'
 
 export const name = 'status-card'
 export const inject = ['systemPrompt']
@@ -22,13 +22,13 @@ export interface Config extends StatusCardSettings {
 export const SettingsSchema: z<StatusCardSettings> = z.object({
   enabled: z.boolean().default(true),
   cardTitle: z.string().default('AI 状态'),
-  template: z.union(['bootstrap']).default('bootstrap'),
+  template: z.union([...TEMPLATE_IDS]).default('bootstrap'),
 })
 
 export const Config: z<Config> = z.object({
   enabled: z.boolean().default(true),
   cardTitle: z.string().default('AI 状态'),
-  template: z.union(['bootstrap']).default('bootstrap'),
+  template: z.union([...TEMPLATE_IDS]).default('bootstrap'),
   sectionOrder: z.number().default(90),
 })
 

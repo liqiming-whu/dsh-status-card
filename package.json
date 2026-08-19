@@ -29,8 +29,8 @@
   },
   "scripts": {
     "build": "tsdown",
-    "check": "tsc --noEmit && pnpm run build && node test/injection.test.mjs && node test/settings.test.mjs",
-    "test": "pnpm run build && node test/injection.test.mjs && node test/settings.test.mjs",
+    "check": "tsc --noEmit && pnpm run build && node test/injection.test.mjs && node test/settings.test.mjs && node test/templates.test.mjs",
+    "test": "pnpm run build && node test/injection.test.mjs && node test/settings.test.mjs && node test/templates.test.mjs",
     "prepare": "pnpm run build"
   },
   "dependencies": {
