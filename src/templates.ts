@@ -4,7 +4,7 @@ export interface GenuiSpec {
   items: unknown[]
 }
 
-export const TEMPLATE_IDS = ['bootstrap', 'a', 'b', 'c', 'd', 'e'] as const
+export const TEMPLATE_IDS = ['bootstrap', 'a', 'b', 'c', 'd', 'e', 'f'] as const
 export type TemplateId = typeof TEMPLATE_IDS[number]
 
 export interface TemplateOption {
@@ -22,6 +22,7 @@ export const TEMPLATE_OPTIONS: readonly TemplateOption[] = [
   { id: 'c', label: 'C · 专业工作', description: '稳重、通用' },
   { id: 'd', label: 'D · 星舰科技', description: '科技、未来感' },
   { id: 'e', label: 'E · 温暖陪伴', description: '温柔、治愈' },
+  { id: 'f', label: 'F · 开发者终端', description: '编程、工程化' },
 ]
 
 export function createBootstrapSpec(cardTitle: string): GenuiSpec {
@@ -145,6 +146,27 @@ export function createTemplateESpec(cardTitle: string): GenuiSpec {
   }
 }
 
+export function createTemplateFSpec(cardTitle: string): GenuiSpec {
+  return {
+    title: cardTitle,
+    gap: 10,
+    items: [{
+      type: 'card', title: '💻 Dev Runtime', items: [
+        {
+          type: 'row', gap: 8, items: [
+            { type: 'stat', label: 'Build', value: '🟢 Ready' },
+            { type: 'stat', label: 'Task', value: '🧩 Coding' },
+            { type: 'stat', label: 'CPU', value: '⚡ 87%' },
+          ],
+        },
+        { type: 'badge', label: '工程模式', tone: 'accent', icon: '🛠️' },
+        { type: 'progress', label: '实现进度', value: 76, valueLabel: '76%' },
+        { type: 'text', size: 'muted', content: '正在分析代码、验证改动并准备交付。', center: true },
+      ],
+    }],
+  }
+}
+
 export function createTemplateSpec(template: TemplateId, cardTitle: string): GenuiSpec {
   switch (template) {
     case 'bootstrap': return createBootstrapSpec(cardTitle)
@@ -153,5 +175,6 @@ export function createTemplateSpec(template: TemplateId, cardTitle: string): Gen
     case 'c': return createTemplateCSpec(cardTitle)
     case 'd': return createTemplateDSpec(cardTitle)
     case 'e': return createTemplateESpec(cardTitle)
+    case 'f': return createTemplateFSpec(cardTitle)
   }
 }

@@ -19,5 +19,6 @@ inspect('b', ['🧭 Focus', '🟢', '🎯', '当前任务', '正在专注处理�
 inspect('c', ['🧠 Agent Console', '🔍 分析', '🛠️ 执行', '状态正常', '可靠结果'])
 inspect('d', ['🚀 Neural Deck', '🟣 Online', '🛰️ 编排中', '🌌', '推理链路'])
 inspect('e', ['☕ 暖心小站', '🥰 温柔', '🫶 陪伴中', '🍀', '默契度'])
-assert.deepEqual(TEMPLATE_OPTIONS.map(option => option.id), ['bootstrap', 'a', 'b', 'c', 'd', 'e'])
-console.log('templates A-E tests passed')
+inspect('f', ['💻 Dev Runtime', '🟢 Ready', '🧩 Coding', '🛠️', '实现进度'])
+assert.deepEqual(TEMPLATE_OPTIONS.map(option => option.id), ['bootstrap', 'a', 'b', 'c', 'd', 'e', 'f'])
+console.log('templates A-F tests passed')
