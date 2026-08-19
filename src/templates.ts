@@ -4,7 +4,7 @@ export interface GenuiSpec {
   items: unknown[]
 }
 
-export const TEMPLATE_IDS = ['bootstrap', 'a', 'b', 'c'] as const
+export const TEMPLATE_IDS = ['bootstrap', 'a', 'b', 'c', 'd'] as const
 export type TemplateId = typeof TEMPLATE_IDS[number]
 
 export interface TemplateOption {
@@ -20,6 +20,7 @@ export const TEMPLATE_OPTIONS: readonly TemplateOption[] = [
   { id: 'a', label: 'A · 软萌活力', description: '可爱、活泼' },
   { id: 'b', label: 'B · 极简专注', description: '简洁、低干扰' },
   { id: 'c', label: 'C · 专业工作', description: '稳重、通用' },
+  { id: 'd', label: 'D · 星舰科技', description: '科技、未来感' },
 ]
 
 export function createBootstrapSpec(cardTitle: string): GenuiSpec {
@@ -101,11 +102,33 @@ export function createTemplateCSpec(cardTitle: string): GenuiSpec {
   }
 }
 
+export function createTemplateDSpec(cardTitle: string): GenuiSpec {
+  return {
+    title: cardTitle,
+    gap: 10,
+    items: [{
+      type: 'card', title: '🚀 Neural Deck', items: [
+        {
+          type: 'row', gap: 8, items: [
+            { type: 'stat', label: 'Core', value: '🟣 Online' },
+            { type: 'stat', label: 'Mission', value: '🛰️ 编排中' },
+            { type: 'stat', label: 'Power', value: '⚡ 96%' },
+          ],
+        },
+        { type: 'badge', label: '深度思考', tone: 'accent', icon: '🌌' },
+        { type: 'progress', label: '推理链路', value: 88, valueLabel: '88%' },
+        { type: 'text', size: 'muted', content: '信号稳定，正在构建最佳答复。', center: true },
+      ],
+    }],
+  }
+}
+
 export function createTemplateSpec(template: TemplateId, cardTitle: string): GenuiSpec {
   switch (template) {
     case 'bootstrap': return createBootstrapSpec(cardTitle)
     case 'a': return createTemplateASpec(cardTitle)
     case 'b': return createTemplateBSpec(cardTitle)
     case 'c': return createTemplateCSpec(cardTitle)
+    case 'd': return createTemplateDSpec(cardTitle)
   }
 }
