@@ -15,7 +15,7 @@
     "./cordis.patch.yml": "./cordis.patch.yml",
     "./package.json": "./package.json"
   },
-  "files": ["lib", "cordis.patch.yml", "README.md", "README_EN.md", "LICENSE"],
+  "files": ["lib", "cordis.patch.yml", "README.md", "README_EN.md", "docs/images/templates", "scripts/generate-card-images.mjs", "LICENSE"],
   "dsh": {
     "bundle": { "patch": "./cordis.patch.yml" },
     "client": {
@@ -33,6 +33,7 @@
   },
   "scripts": {
     "build": "tsdown",
+    "images": "node scripts/generate-card-images.mjs",
     "check": "tsc --noEmit && pnpm run build && node test/injection.test.mjs && node test/settings.test.mjs && node test/templates.test.mjs",
     "test": "pnpm run build && node test/injection.test.mjs && node test/settings.test.mjs && node test/templates.test.mjs",
     "prepare": "pnpm run build"

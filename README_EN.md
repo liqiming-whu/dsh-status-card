@@ -18,6 +18,25 @@
 - Provides a live settings preview and custom-template validation.
 - Limits custom templates to 64 KiB and requires a non-empty `items` array.
 
+## Six template previews
+
+<table>
+  <tr>
+    <td width="50%"><strong>A · Soft Vitality</strong><br><img src="./docs/images/templates/en/template-a.svg" alt="Template A Soft Vitality English preview" width="560"></td>
+    <td width="50%"><strong>B · Minimal Focus</strong><br><img src="./docs/images/templates/en/template-b.svg" alt="Template B Minimal Focus English preview" width="560"></td>
+  </tr>
+  <tr>
+    <td width="50%"><strong>C · Professional Work</strong><br><img src="./docs/images/templates/en/template-c.svg" alt="Template C Professional Work English preview" width="560"></td>
+    <td width="50%"><strong>D · Neural Deck</strong><br><img src="./docs/images/templates/en/template-d.svg" alt="Template D Neural Deck English preview" width="560"></td>
+  </tr>
+  <tr>
+    <td width="50%"><strong>E · Warm Companion</strong><br><img src="./docs/images/templates/en/template-e.svg" alt="Template E Warm Companion English preview" width="560"></td>
+    <td width="50%"><strong>F · Developer Runtime</strong><br><img src="./docs/images/templates/en/template-f.svg" alt="Template F Developer Runtime English preview" width="560"></td>
+  </tr>
+</table>
+
+> These images reflect the current A–F templates' structure, copy, status values, and visual intent. Cards in agent replies are rendered by GenUI using the active interface theme.
+
 ## Requirements
 
 - DeepSeek Harness installed.

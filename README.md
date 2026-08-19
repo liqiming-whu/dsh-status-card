@@ -18,6 +18,25 @@
 - 设置页提供实时卡片预览和自定义模板校验。
 - 自定义模板限制为 64 KiB，必须包含非空 `items` 数组。
 
+## 六款模板预览
+
+<table>
+  <tr>
+    <td width="50%"><strong>A · 软萌活力</strong><br><img src="./docs/images/templates/zh/template-a.svg" alt="模板 A 软萌活力中文预览" width="560"></td>
+    <td width="50%"><strong>B · 极简专注</strong><br><img src="./docs/images/templates/zh/template-b.svg" alt="模板 B 极简专注中文预览" width="560"></td>
+  </tr>
+  <tr>
+    <td width="50%"><strong>C · 专业工作</strong><br><img src="./docs/images/templates/zh/template-c.svg" alt="模板 C 专业工作中文预览" width="560"></td>
+    <td width="50%"><strong>D · 星舰科技</strong><br><img src="./docs/images/templates/zh/template-d.svg" alt="模板 D 星舰科技中文预览" width="560"></td>
+  </tr>
+  <tr>
+    <td width="50%"><strong>E · 温暖陪伴</strong><br><img src="./docs/images/templates/zh/template-e.svg" alt="模板 E 温暖陪伴中文预览" width="560"></td>
+    <td width="50%"><strong>F · 开发者终端</strong><br><img src="./docs/images/templates/zh/template-f.svg" alt="模板 F 开发者终端中文预览" width="560"></td>
+  </tr>
+</table>
+
+> 展示图根据当前内置 A–F 模板的结构、文案、状态值和视觉语义生成；模型回复中的实际卡片由 GenUI 按当前界面主题渲染。
+
 ## 前置要求
 
 - 已安装 DeepSeek Harness。
