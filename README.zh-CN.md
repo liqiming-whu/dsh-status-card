@@ -8,6 +8,7 @@
 - **不**调用 `agent.inject()`、不注册动态提示上下文、不追加会话消息，因此指令不会成为用户/助手对话历史。
 - 使用 emoji 代替 Material Icons。
 - 依赖 `@omdsh-dev/dsh-genui` 完成围栏内联渲染；同时需要在 Web profile 中挂载 GenUI 插件。本 bundle 不会再次插入 GenUI 行，以免用户已经安装 GenUI 时重复注册工具和客户端模块。
+- 设置页预览由本插件本地实现，不跨插件导入 GenUI 客户端值，遵守 DSH 客户端 bundle 纯度约束；自定义模板中暂不支持的组件会在预览中明确提示，聊天中的真实渲染仍由 GenUI 完成。
 
 ## 设置
 

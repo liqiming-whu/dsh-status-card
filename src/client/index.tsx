@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useSyncExternalStore } from 'react'
 import type { ClientContext, SettingsScope } from '@deepseek-ai/dsh-client-runtime/client'
 import '@deepseek-ai/dsh-client-ui-settings/client'
-import { renderGenuiFence } from '@omdsh-dev/dsh-genui/client'
 import {
   createTemplateSpec,
   DEFAULT_CUSTOM_TEMPLATE,
@@ -10,6 +9,7 @@ import {
   type TemplateId,
 } from '../templates.ts'
 import type { StatusCardSettings } from '../index.ts'
+import { StatusCardPreview } from './preview.tsx'
 
 const defaults: StatusCardSettings = {
   enabled: true,
@@ -60,7 +60,7 @@ function StatusCardSettingsSection({ scope }: { scope: SettingsScope<StatusCardS
       title,
       settings.template === 'custom' ? customDraft : settings.customTemplate,
     )
-    preview = renderGenuiFence(JSON.stringify(previewSpec), 'status-card-settings-preview')
+    preview = <StatusCardPreview spec={previewSpec} />
   } catch (error) {
     previewError = error instanceof Error ? error.message : String(error)
     preview = null

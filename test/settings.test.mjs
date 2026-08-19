@@ -8,6 +8,9 @@ assert.equal(pkg.dsh.client.platform, 'web')
 assert.ok(pkg.dsh.client.inject.includes('@omdsh-dev/dsh-genui'))
 assert.ok(pkg.dsh.client.inject.includes('@deepseek-ai/dsh-client-ui-settings'))
 
+const clientSource = await fs.readFile(new URL('../src/client/index.tsx', import.meta.url), 'utf8')
+assert.ok(!clientSource.includes("from '@omdsh-dev/dsh-genui/client'"), 'forbidden cross-plugin client value import')
+
 const bundle = await fs.readFile(new URL('../lib/client.cjs', import.meta.url), 'utf8')
 for (const expected of [
   'settings.section',
@@ -16,8 +19,8 @@ for (const expected of [
   '实时渲染预览',
   '自定义 dsh-ui JSON',
   '保存自定义模板',
-  'renderGenuiFence',
-  'status-card-settings-preview',
+  'StatusCardPreview',
+  '预览暂不支持组件',
 ]) {
   assert.ok(bundle.includes(expected), `client bundle missing ${expected}`)
 }
