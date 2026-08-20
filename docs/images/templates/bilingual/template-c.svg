@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2460" height="640" viewBox="0 0 2460 640" role="img" aria-labelledby="title desc">
+  <title id="title">C · 专业工作 · 中文与 English</title>
+  <desc id="desc">dsh-status-card bilingual template preview</desc>
+  <rect width="2460" height="640" rx="32" fill="#eef2f7"/>
+  <text x="40" y="38" font-family="Inter, Segoe UI, sans-serif" font-size="20" font-weight="700" fill="#52637a">中文 / English</text>
+  <svg x="20" y="70" width="1200" height="520" viewBox="0 0 1200 520">
+  <title id="zh-title">C · 专业工作</title>
+  <desc id="zh-desc">dsh-status-card 中文模板展示图</desc>
+  <defs>
+    <linearGradient id="zh-bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e9eef7"/><stop offset="1" stop-color="#cfd9e8"/></linearGradient>
+    <linearGradient id="zh-bar" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#315e9b"/><stop offset="1" stop-color="#60a5fa"/></linearGradient>
+    <filter id="zh-shadow" x="-10%" y="-20%" width="120%" height="150%"><feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#6b7280" flood-opacity=".18"/></filter>
+  </defs>
+  <style>
+    text { font-family: Inter, "Segoe UI", "Microsoft YaHei", "Noto Sans CJK SC", "Segoe UI Emoji", sans-serif; fill: #14213d; }
+    .eyebrow { font-size: 20px; font-weight: 700; letter-spacing: .6px; }
+    .title { font-size: 30px; font-weight: 760; }
+    .label { font-size: 17px; font-weight: 600; fill: #52637a; }
+    .value { font-size: 24px; font-weight: 720; }
+    .badge { font-size: 18px; font-weight: 700; fill: #17764b; }
+    .progress { font-size: 17px; font-weight: 650; }
+    .footer { font-size: 18px; font-weight: 520; fill: #52637a; }
+  </style>
+  <rect width="1200" height="520" rx="28" fill="url(#zh-bg)"/>
+  <circle cx="1090" cy="46" r="120" fill="#315e9b" opacity=".08"/>
+  <circle cx="110" cy="505" r="150" fill="#60a5fa" opacity=".07"/>
+  <text x="60" y="60" class="eyebrow">C · 专业工作</text>
+  <rect x="58" y="88" width="1084" height="378" rx="25" fill="#f9fbff" stroke="#aebed3" stroke-width="2" filter="url(#zh-shadow)"/>
+  <text x="92" y="151" class="title">🧠 Agent 控制台</text>
+  <rect x="800" y="119" width="300" height="42" rx="21" fill="#e8f7ef"/>
+  <text x="950" y="146" class="badge" text-anchor="middle">✅ 状态正常</text>
+  
+    <rect x="92" y="205" width="296" height="90" rx="16" fill="#edf3fa" stroke="#aebed3"/>
+    <text x="112" y="234" class="label">模式</text>
+    <text x="112" y="272" class="value">🔍 分析</text>
+    <rect x="422" y="205" width="296" height="90" rx="16" fill="#edf3fa" stroke="#aebed3"/>
+    <text x="442" y="234" class="label">阶段</text>
+    <text x="442" y="272" class="value">🛠️ 执行</text>
+    <rect x="752" y="205" width="296" height="90" rx="16" fill="#edf3fa" stroke="#aebed3"/>
+    <text x="772" y="234" class="label">负载</text>
+    <text x="772" y="272" class="value">⚡ 82%</text>
+  <text x="92" y="337" class="progress">任务进度</text>
+  <text x="1090" y="337" class="progress" text-anchor="end">72%</text>
+  <rect x="92" y="354" width="998" height="14" rx="7" fill="#aebed3" opacity=".55"/>
+  <rect x="92" y="354" width="719" height="14" rx="7" fill="url(#zh-bar)"/>
+  <text x="600" y="417" class="footer" text-anchor="middle">正在核对细节并生成可靠结果。</text>
+</svg>
+  <svg x="1240" y="70" width="1200" height="520" viewBox="0 0 1200 520">
+  <title id="en-title">C · Professional Work</title>
+  <desc id="en-desc">dsh-status-card English template preview</desc>
+  <defs>
+    <linearGradient id="en-bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e9eef7"/><stop offset="1" stop-color="#cfd9e8"/></linearGradient>
+    <linearGradient id="en-bar" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#315e9b"/><stop offset="1" stop-color="#60a5fa"/></linearGradient>
+    <filter id="en-shadow" x="-10%" y="-20%" width="120%" height="150%"><feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#6b7280" flood-opacity=".18"/></filter>
+  </defs>
+  <style>
+    text { font-family: Inter, "Segoe UI", "Microsoft YaHei", "Noto Sans CJK SC", "Segoe UI Emoji", sans-serif; fill: #14213d; }
+    .eyebrow { font-size: 20px; font-weight: 700; letter-spacing: .6px; }
+    .title { font-size: 30px; font-weight: 760; }
+    .label { font-size: 17px; font-weight: 600; fill: #52637a; }
+    .value { font-size: 24px; font-weight: 720; }
+    .badge { font-size: 18px; font-weight: 700; fill: #17764b; }
+    .progress { font-size: 17px; font-weight: 650; }
+    .footer { font-size: 18px; font-weight: 520; fill: #52637a; }
+  </style>
+  <rect width="1200" height="520" rx="28" fill="url(#en-bg)"/>
+  <circle cx="1090" cy="46" r="120" fill="#315e9b" opacity=".08"/>
+  <circle cx="110" cy="505" r="150" fill="#60a5fa" opacity=".07"/>
+  <text x="60" y="60" class="eyebrow">C · Professional Work</text>
+  <rect x="58" y="88" width="1084" height="378" rx="25" fill="#f9fbff" stroke="#aebed3" stroke-width="2" filter="url(#en-shadow)"/>
+  <text x="92" y="151" class="title">🧠 Agent Console</text>
+  <rect x="800" y="119" width="300" height="42" rx="21" fill="#e8f7ef"/>
+  <text x="950" y="146" class="badge" text-anchor="middle">✅ All Systems Normal</text>
+  
+    <rect x="92" y="205" width="296" height="90" rx="16" fill="#edf3fa" stroke="#aebed3"/>
+    <text x="112" y="234" class="label">Mode</text>
+    <text x="112" y="272" class="value">🔍 Analysis</text>
+    <rect x="422" y="205" width="296" height="90" rx="16" fill="#edf3fa" stroke="#aebed3"/>
+    <text x="442" y="234" class="label">Stage</text>
+    <text x="442" y="272" class="value">🛠️ Execute</text>
+    <rect x="752" y="205" width="296" height="90" rx="16" fill="#edf3fa" stroke="#aebed3"/>
+    <text x="772" y="234" class="label">Load</text>
+    <text x="772" y="272" class="value">⚡ 82%</text>
+  <text x="92" y="337" class="progress">Task progress</text>
+  <text x="1090" y="337" class="progress" text-anchor="end">72%</text>
+  <rect x="92" y="354" width="998" height="14" rx="7" fill="#aebed3" opacity=".55"/>
+  <rect x="92" y="354" width="719" height="14" rx="7" fill="url(#en-bar)"/>
+  <text x="600" y="417" class="footer" text-anchor="middle">Checking details and preparing a reliable result.</text>
+</svg>
+</svg>

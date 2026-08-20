@@ -79,6 +79,26 @@ function render(card, lang) {
 </svg>`
 }
 
+function scopedBody(svg, prefix) {
+  const body = svg.replace(/^<svg[^>]*>/, '').replace(/<\/svg>\s*$/, '')
+  return body
+    .replace(/id="([^"]+)"/g, (_, id) => `id="${prefix}-${id}"`)
+    .replaceAll('url(#', `url(#${prefix}-`)
+}
+
+function renderBilingual(card) {
+  const zh = scopedBody(render(card, 'zh'), 'zh')
+  const en = scopedBody(render(cards.en.find(item => item.id === card.id), 'en'), 'en')
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="2460" height="640" viewBox="0 0 2460 640" role="img" aria-labelledby="title desc">
+  <title id="title">${esc(card.name)} · 中文与 English</title>
+  <desc id="desc">dsh-status-card bilingual template preview</desc>
+  <rect width="2460" height="640" rx="32" fill="#eef2f7"/>
+  <text x="40" y="38" font-family="Inter, Segoe UI, sans-serif" font-size="20" font-weight="700" fill="#52637a">中文 / English</text>
+  <svg x="20" y="70" width="1200" height="520" viewBox="0 0 1200 520">${zh}</svg>
+  <svg x="1240" y="70" width="1200" height="520" viewBox="0 0 1200 520">${en}</svg>
+</svg>`
+}
+
 for (const [lang, entries] of Object.entries(cards)) {
   const dir = join(outRoot, lang)
   await mkdir(dir, { recursive: true })
@@ -87,4 +107,10 @@ for (const [lang, entries] of Object.entries(cards)) {
   }
 }
 
-console.log('Generated 12 bilingual template images in docs/images/templates/')
+const bilingualDir = join(outRoot, 'bilingual')
+await mkdir(bilingualDir, { recursive: true })
+for (const card of cards.zh) {
+  await writeFile(join(bilingualDir, `template-${card.id}.svg`), renderBilingual(card), 'utf8')
+}
+
+console.log('Generated 12 localized and 6 bilingual template images in docs/images/templates/')

@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2460" height="640" viewBox="0 0 2460 640" role="img" aria-labelledby="title desc">
+  <title id="title">E · 温暖陪伴 · 中文与 English</title>
+  <desc id="desc">dsh-status-card bilingual template preview</desc>
+  <rect width="2460" height="640" rx="32" fill="#eef2f7"/>
+  <text x="40" y="38" font-family="Inter, Segoe UI, sans-serif" font-size="20" font-weight="700" fill="#52637a">中文 / English</text>
+  <svg x="20" y="70" width="1200" height="520" viewBox="0 0 1200 520">
+  <title id="zh-title">E · 温暖陪伴</title>
+  <desc id="zh-desc">dsh-status-card 中文模板展示图</desc>
+  <defs>
+    <linearGradient id="zh-bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff5e9"/><stop offset="1" stop-color="#ffe2d0"/></linearGradient>
+    <linearGradient id="zh-bar" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#f59e6b"/><stop offset="1" stop-color="#f8c56b"/></linearGradient>
+    <filter id="zh-shadow" x="-10%" y="-20%" width="120%" height="150%"><feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#6b7280" flood-opacity=".18"/></filter>
+  </defs>
+  <style>
+    text { font-family: Inter, "Segoe UI", "Microsoft YaHei", "Noto Sans CJK SC", "Segoe UI Emoji", sans-serif; fill: #55382d; }
+    .eyebrow { font-size: 20px; font-weight: 700; letter-spacing: .6px; }
+    .title { font-size: 30px; font-weight: 760; }
+    .label { font-size: 17px; font-weight: 600; fill: #967064; }
+    .value { font-size: 24px; font-weight: 720; }
+    .badge { font-size: 18px; font-weight: 700; fill: #4d8b45; }
+    .progress { font-size: 17px; font-weight: 650; }
+    .footer { font-size: 18px; font-weight: 520; fill: #967064; }
+  </style>
+  <rect width="1200" height="520" rx="28" fill="url(#zh-bg)"/>
+  <circle cx="1090" cy="46" r="120" fill="#f59e6b" opacity=".08"/>
+  <circle cx="110" cy="505" r="150" fill="#f8c56b" opacity=".07"/>
+  <text x="60" y="60" class="eyebrow">E · 温暖陪伴</text>
+  <rect x="58" y="88" width="1084" height="378" rx="25" fill="#fffdf8" stroke="#f3c99f" stroke-width="2" filter="url(#zh-shadow)"/>
+  <text x="92" y="151" class="title">☕ 暖心小站</text>
+  <rect x="800" y="119" width="300" height="42" rx="21" fill="#eef9e9"/>
+  <text x="950" y="146" class="badge" text-anchor="middle">🍀 安心陪伴模式</text>
+  
+    <rect x="92" y="205" width="296" height="90" rx="16" fill="#fff7ed" stroke="#f3c99f"/>
+    <text x="112" y="234" class="label">心情</text>
+    <text x="112" y="272" class="value">🥰 温柔</text>
+    <rect x="422" y="205" width="296" height="90" rx="16" fill="#fff7ed" stroke="#f3c99f"/>
+    <text x="442" y="234" class="label">陪伴</text>
+    <text x="442" y="272" class="value">🫶 进行中</text>
+    <rect x="752" y="205" width="296" height="90" rx="16" fill="#fff7ed" stroke="#f3c99f"/>
+    <text x="772" y="234" class="label">温度</text>
+    <text x="772" y="272" class="value">🌤️ 98%</text>
+  <text x="92" y="337" class="progress">默契度</text>
+  <text x="1090" y="337" class="progress" text-anchor="end">94%</text>
+  <rect x="92" y="354" width="998" height="14" rx="7" fill="#f3c99f" opacity=".55"/>
+  <rect x="92" y="354" width="938" height="14" rx="7" fill="url(#zh-bar)"/>
+  <text x="600" y="417" class="footer" text-anchor="middle">慢慢来，我会陪你一起把事情做好。</text>
+</svg>
+  <svg x="1240" y="70" width="1200" height="520" viewBox="0 0 1200 520">
+  <title id="en-title">E · Warm Companion</title>
+  <desc id="en-desc">dsh-status-card English template preview</desc>
+  <defs>
+    <linearGradient id="en-bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff5e9"/><stop offset="1" stop-color="#ffe2d0"/></linearGradient>
+    <linearGradient id="en-bar" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#f59e6b"/><stop offset="1" stop-color="#f8c56b"/></linearGradient>
+    <filter id="en-shadow" x="-10%" y="-20%" width="120%" height="150%"><feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#6b7280" flood-opacity=".18"/></filter>
+  </defs>
+  <style>
+    text { font-family: Inter, "Segoe UI", "Microsoft YaHei", "Noto Sans CJK SC", "Segoe UI Emoji", sans-serif; fill: #55382d; }
+    .eyebrow { font-size: 20px; font-weight: 700; letter-spacing: .6px; }
+    .title { font-size: 30px; font-weight: 760; }
+    .label { font-size: 17px; font-weight: 600; fill: #967064; }
+    .value { font-size: 24px; font-weight: 720; }
+    .badge { font-size: 18px; font-weight: 700; fill: #4d8b45; }
+    .progress { font-size: 17px; font-weight: 650; }
+    .footer { font-size: 18px; font-weight: 520; fill: #967064; }
+  </style>
+  <rect width="1200" height="520" rx="28" fill="url(#en-bg)"/>
+  <circle cx="1090" cy="46" r="120" fill="#f59e6b" opacity=".08"/>
+  <circle cx="110" cy="505" r="150" fill="#f8c56b" opacity=".07"/>
+  <text x="60" y="60" class="eyebrow">E · Warm Companion</text>
+  <rect x="58" y="88" width="1084" height="378" rx="25" fill="#fffdf8" stroke="#f3c99f" stroke-width="2" filter="url(#en-shadow)"/>
+  <text x="92" y="151" class="title">☕ Cozy Corner</text>
+  <rect x="800" y="119" width="300" height="42" rx="21" fill="#eef9e9"/>
+  <text x="950" y="146" class="badge" text-anchor="middle">🍀 Caring Companion</text>
+  
+    <rect x="92" y="205" width="296" height="90" rx="16" fill="#fff7ed" stroke="#f3c99f"/>
+    <text x="112" y="234" class="label">Mood</text>
+    <text x="112" y="272" class="value">🥰 Gentle</text>
+    <rect x="422" y="205" width="296" height="90" rx="16" fill="#fff7ed" stroke="#f3c99f"/>
+    <text x="442" y="234" class="label">Company</text>
+    <text x="442" y="272" class="value">🫶 Present</text>
+    <rect x="752" y="205" width="296" height="90" rx="16" fill="#fff7ed" stroke="#f3c99f"/>
+    <text x="772" y="234" class="label">Warmth</text>
+    <text x="772" y="272" class="value">🌤️ 98%</text>
+  <text x="92" y="337" class="progress">Rapport</text>
+  <text x="1090" y="337" class="progress" text-anchor="end">94%</text>
+  <rect x="92" y="354" width="998" height="14" rx="7" fill="#f3c99f" opacity=".55"/>
+  <rect x="92" y="354" width="938" height="14" rx="7" fill="url(#en-bar)"/>
+  <text x="600" y="417" class="footer" text-anchor="middle">Take your time — we'll get this done together.</text>
+</svg>
+</svg>
