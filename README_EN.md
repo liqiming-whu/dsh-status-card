@@ -42,15 +42,11 @@
 
 - DeepSeek Harness installed.
 - `pnpm` available on `PATH`.
-- [`@omdsh-dev/dsh-genui`](https://github.com/omdsh-dev/dsh-genui) installed and mounted in the Web profile. This dependency is also published in the **dsh-market plugin marketplace**, where it can be searched for and installed directly without entering a GitHub URL.
+- [`@omdsh-dev/dsh-genui`](https://github.com/omdsh-dev/dsh-genui) installed and enabled in the Web profile. It is available in the **dsh-market plugin marketplace**; install it there before installing this plugin.
 
-Project dependency:
+This plugin uses GenUI through `dsh.client.inject` but does not declare GenUI as a pnpm dependency. That keeps installation from resolving a transitive GitHub dependency; GenUI remains a required runtime prerequisite for rendering status-card fences.
 
-```json
-"@omdsh-dev/dsh-genui": "github:omdsh-dev/dsh-genui"
-```
-
-> pnpm 11 enables `blockExoticSubdeps` by default. Because this project and GenUI use GitHub dependencies, add `blockExoticSubdeps: false` at the top level of `~/.dsh/profiles/web/pnpm-workspace.yaml`. This setting is independent of `allowBuilds`.
+> Without GenUI, the status-card formatting instruction is still injected, but `dsh-ui` fences in the conversation cannot render. Install and enable GenUI first, then start a new conversation.
 
 ## Install from GitHub
 
@@ -67,7 +63,7 @@ dsh plugin --profile web add "git+https://github.com/omdsh-dev/dsh-genui.git"
 Pin the stable release (recommended):
 
 ```sh
-dsh plugin --profile web add "git+https://github.com/liqiming-whu/dsh-status-card.git#v0.2.0"
+dsh plugin --profile web add "git+https://github.com/liqiming-whu/dsh-status-card.git#v0.2.1"
 ```
 
 Install the latest main branch:
@@ -80,10 +76,10 @@ Restart `dsh web` after installation and hard-refresh the browser page.
 
 ## Install from a Release tarball
 
-Download `dsh-status-card-0.2.0.tgz` from [Releases](https://github.com/liqiming-whu/dsh-status-card/releases), then run:
+Download `dsh-status-card-0.2.1.tgz` from [Releases](https://github.com/liqiming-whu/dsh-status-card/releases), then run:
 
 ```sh
-dsh plugin --profile web add ./dsh-status-card-0.2.0.tgz
+dsh plugin --profile web add ./dsh-status-card-0.2.1.tgz
 ```
 
 ## Usage

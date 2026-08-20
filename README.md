@@ -42,15 +42,11 @@
 
 - 已安装 DeepSeek Harness。
 - `pnpm` 可从终端运行。
-- Web profile 已安装并启用 [`@omdsh-dev/dsh-genui`](https://github.com/omdsh-dev/dsh-genui)。该依赖已经发布到 **dsh-market 插件市场**，可以直接在市场中搜索并下载安装，无需手动输入 GitHub 地址。
+- Web profile 已安装并启用 [`@omdsh-dev/dsh-genui`](https://github.com/omdsh-dev/dsh-genui)。该插件已经发布到 **dsh-market 插件市场**，请先在市场中搜索并安装它，再安装本插件。
 
-本项目依赖：
+本项目通过 `dsh.client.inject` 使用 GenUI，但不会把 GenUI 作为 pnpm 依赖自动拉取。这样可以避免安装状态卡插件时解析 GitHub 传递依赖；GenUI 仍是运行状态卡片所需的前置插件。
 
-```json
-"@omdsh-dev/dsh-genui": "github:omdsh-dev/dsh-genui"
-```
-
-> pnpm 11 默认启用 `blockExoticSubdeps`。由于本项目和 GenUI 使用 GitHub 依赖，请在 `~/.dsh/profiles/web/pnpm-workspace.yaml` 顶层加入 `blockExoticSubdeps: false`。该设置与 `allowBuilds` 相互独立。
+> 如果 GenUI 未安装，状态卡片格式指令仍会注入，但聊天中的 `dsh-ui` 围栏不会被渲染。请先安装并启用 GenUI，再开始新会话。
 
 ## 从 GitHub 安装
 
@@ -67,7 +63,7 @@ dsh plugin --profile web add "git+https://github.com/omdsh-dev/dsh-genui.git"
 推荐固定到稳定 Release：
 
 ```sh
-dsh plugin --profile web add "git+https://github.com/liqiming-whu/dsh-status-card.git#v0.2.0"
+dsh plugin --profile web add "git+https://github.com/liqiming-whu/dsh-status-card.git#v0.2.1"
 ```
 
 安装最新主分支：
@@ -80,10 +76,10 @@ dsh plugin --profile web add "git+https://github.com/liqiming-whu/dsh-status-car
 
 ## 从 Release 安装包安装
 
-从 [Releases](https://github.com/liqiming-whu/dsh-status-card/releases) 下载 `dsh-status-card-0.2.0.tgz`，然后执行：
+从 [Releases](https://github.com/liqiming-whu/dsh-status-card/releases) 下载 `dsh-status-card-0.2.1.tgz`，然后执行：
 
 ```sh
-dsh plugin --profile web add ./dsh-status-card-0.2.0.tgz
+dsh plugin --profile web add ./dsh-status-card-0.2.1.tgz
 ```
 
 ## 使用

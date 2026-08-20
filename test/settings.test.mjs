@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import fs from 'node:fs/promises'
 
 const pkg = JSON.parse(await fs.readFile(new URL('../package.json', import.meta.url), 'utf8'))
-assert.equal(pkg.dependencies['@omdsh-dev/dsh-genui'], 'github:omdsh-dev/dsh-genui')
+assert.equal(pkg.dependencies, undefined)
 assert.equal(pkg.exports['./client'].default, './lib/client.cjs')
 assert.equal(pkg.dsh.client.platform, 'web')
 assert.ok(pkg.dsh.client.inject.includes('@omdsh-dev/dsh-genui'))
@@ -18,6 +18,8 @@ for (const expected of [
   'settings.section',
   '状态卡片',
   'Status Card',
+  '使用前请先在 dsh-market 安装并启用 @omdsh-dev/dsh-genui',
+  'Install and enable @omdsh-dev/dsh-genui from dsh-market first',
   '卡片标题',
   'Card title',
   '实时渲染预览',

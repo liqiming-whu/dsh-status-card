@@ -27,6 +27,7 @@ const messages = {
   zh: {
     title: '状态卡片',
     description: '在每次 Agent 回复开头注入 dsh-ui 状态卡片格式要求。注入位于系统提示组装层，不写入对话历史。',
+    prerequisite: '使用前请先在 dsh-market 安装并启用 @omdsh-dev/dsh-genui；否则聊天中的 dsh-ui 围栏不会渲染。',
     enabled: '启用回复状态卡片',
     cardTitle: '卡片标题',
     titlePlaceholder: '例如：AI 状态',
@@ -41,6 +42,7 @@ const messages = {
   en: {
     title: 'Status Card',
     description: 'Inject a dsh-ui status-card format requirement at the start of every agent reply. The instruction is assembled in the system prompt and is not written to conversation history.',
+    prerequisite: 'Install and enable @omdsh-dev/dsh-genui from dsh-market first; otherwise dsh-ui fences in the conversation cannot render.',
     enabled: 'Enable reply status cards',
     cardTitle: 'Card title',
     titlePlaceholder: 'For example: AI Status',
@@ -125,6 +127,7 @@ function StatusCardSettingsSection({ scope, browserLocale }: { scope: SettingsSc
       <div>
         <h2 style={{ margin: 0 }}>{text.title}</h2>
         <p style={{ marginBottom: 0 }}>{text.description}</p>
+        <p role="note" style={{ marginBottom: 0, color: 'var(--dsw-alias-color-warning, #a66)' }}>{text.prerequisite}</p>
       </div>
 
       <div style={panelStyle}>

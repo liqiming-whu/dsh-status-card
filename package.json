@@ -1,6 +1,6 @@
 {
   "name": "dsh-status-card",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Inject a configurable dsh-ui status card instruction before every DSH agent reply",
   "keywords": ["deepseek-harness", "dsh", "dsh-plugin", "genui", "status-card"],
   "repository": { "type": "git", "url": "git+https://github.com/liqiming-whu/dsh-status-card.git" },
@@ -37,9 +37,6 @@
     "check": "tsc --noEmit && pnpm run build && node test/injection.test.mjs && node test/settings.test.mjs && node test/templates.test.mjs",
     "test": "pnpm run build && node test/injection.test.mjs && node test/settings.test.mjs && node test/templates.test.mjs",
     "prepare": "pnpm run build"
-  },
-  "dependencies": {
-    "@omdsh-dev/dsh-genui": "github:omdsh-dev/dsh-genui"
   },
   "peerDependencies": {
     "@deepseek-ai/cordis": "^4.0.1",
