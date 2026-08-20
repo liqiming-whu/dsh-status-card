@@ -29,7 +29,7 @@
   <text x="92" y="151" class="title">💻 开发运行时</text>
   <rect x="800" y="119" width="300" height="42" rx="21" fill="#11372d"/>
   <text x="950" y="146" class="badge" text-anchor="middle">🛠️ 工程模式</text>
-  
+
     <rect x="92" y="205" width="296" height="90" rx="16" fill="#10211c" stroke="#275848"/>
     <text x="112" y="234" class="label">构建</text>
     <text x="112" y="272" class="value">🟢 就绪</text>
@@ -71,7 +71,7 @@
   <text x="92" y="151" class="title">💻 Dev Runtime</text>
   <rect x="800" y="119" width="300" height="42" rx="21" fill="#11372d"/>
   <text x="950" y="146" class="badge" text-anchor="middle">🛠️ Engineering Mode</text>
-  
+
     <rect x="92" y="205" width="296" height="90" rx="16" fill="#10211c" stroke="#275848"/>
     <text x="112" y="234" class="label">Build</text>
     <text x="112" y="272" class="value">🟢 Ready</text>

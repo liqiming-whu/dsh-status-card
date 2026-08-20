@@ -29,7 +29,7 @@
   <text x="92" y="151" class="title">🧠 Agent 控制台</text>
   <rect x="800" y="119" width="300" height="42" rx="21" fill="#e8f7ef"/>
   <text x="950" y="146" class="badge" text-anchor="middle">✅ 状态正常</text>
-  
+
     <rect x="92" y="205" width="296" height="90" rx="16" fill="#edf3fa" stroke="#aebed3"/>
     <text x="112" y="234" class="label">模式</text>
     <text x="112" y="272" class="value">🔍 分析</text>
@@ -71,7 +71,7 @@
   <text x="92" y="151" class="title">🧠 Agent Console</text>
   <rect x="800" y="119" width="300" height="42" rx="21" fill="#e8f7ef"/>
   <text x="950" y="146" class="badge" text-anchor="middle">✅ All Systems Normal</text>
-  
+
     <rect x="92" y="205" width="296" height="90" rx="16" fill="#edf3fa" stroke="#aebed3"/>
     <text x="112" y="234" class="label">Mode</text>
     <text x="112" y="272" class="value">🔍 Analysis</text>

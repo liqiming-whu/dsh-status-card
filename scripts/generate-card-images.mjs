@@ -84,6 +84,7 @@ function scopedBody(svg, prefix) {
   return body
     .replace(/id="([^"]+)"/g, (_, id) => `id="${prefix}-${id}"`)
     .replaceAll('url(#', `url(#${prefix}-`)
+    .replace(/[ \t]+$/gm, '')
 }
 
 function renderBilingual(card) {

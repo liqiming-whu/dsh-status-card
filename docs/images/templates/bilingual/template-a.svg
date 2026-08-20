@@ -29,7 +29,7 @@
   <text x="92" y="151" class="title">🌸 AI 状态</text>
   <rect x="800" y="119" width="300" height="42" rx="21" fill="#eafaf1"/>
   <text x="950" y="146" class="badge" text-anchor="middle">🌟 超可爱模式</text>
-  
+
     <rect x="92" y="205" width="296" height="90" rx="16" fill="#fff7fb" stroke="#f1c7dc"/>
     <text x="112" y="234" class="label">Mood</text>
     <text x="112" y="272" class="value">😊 开心</text>
@@ -71,7 +71,7 @@
   <text x="92" y="151" class="title">🌸 AI Status</text>
   <rect x="800" y="119" width="300" height="42" rx="21" fill="#eafaf1"/>
   <text x="950" y="146" class="badge" text-anchor="middle">🌟 Super Cute Mode</text>
-  
+
     <rect x="92" y="205" width="296" height="90" rx="16" fill="#fff7fb" stroke="#f1c7dc"/>
     <text x="112" y="234" class="label">Mood</text>
     <text x="112" y="272" class="value">😊 Happy</text>
