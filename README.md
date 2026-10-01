@@ -84,11 +84,12 @@ dsh plugin --profile web add ./dsh-status-card-0.3.1.tgz
 
 桌面应用使用的 profile 名是 `desktop`（`dsh web` 为 `web`），请按实际运行方式替换 `--profile`。
 
-也可以从源码自行打包（这样得到的产物与 Release 附件同源）：
+也可以从 `v0.3.1` 标签的源码自行打包——与 Release 附件**同源**，但 `pnpm pack` 产出的 tgz 不保证与附件逐字节相同（例如 `core.autocrlf` 生效时，检出会把纳入版本控制的文本文件转成 CRLF；`lib/**` 构建产物不受影响）：
 
 ```sh
 git clone https://github.com/liqiming-whu/dsh-status-card.git
 cd dsh-status-card
+git checkout v0.3.1
 pnpm install
 pnpm pack
 dsh plugin --profile web add ./dsh-status-card-0.3.1.tgz

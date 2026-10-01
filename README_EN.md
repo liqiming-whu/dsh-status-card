@@ -84,11 +84,12 @@ dsh plugin --profile web add ./dsh-status-card-0.3.1.tgz
 
 The desktop app uses the profile name `desktop` (`web` for `dsh web`); replace `--profile` to match how you run DSH.
 
-You can also build from source (which reproduces the same artifact as the Release asset):
+You can also build from the `v0.3.1` tag's source. It is the **same source** the Release asset was built from, but the tgz `pnpm pack` produces is not guaranteed to be byte-identical to that asset (with `core.autocrlf` in effect, checkout converts tracked text files to CRLF while the `lib/**` build outputs stay identical):
 
 ```sh
 git clone https://github.com/liqiming-whu/dsh-status-card.git
 cd dsh-status-card
+git checkout v0.3.1
 pnpm install
 pnpm pack
 dsh plugin --profile web add ./dsh-status-card-0.3.1.tgz
