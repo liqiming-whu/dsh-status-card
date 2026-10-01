@@ -2,9 +2,9 @@
 
 ## Compatibility and release status
 
-The migration targets the locally installed DSH **0.2.0-rc.2** only. Plugin **0.3.1** is this repository's next version: it is committed and tagged `v0.3.1`, but no GitHub Release tarball is published unless the Releases page actually lists one. Historical Git tags include `v0.2.1`; historical Release assets must be checked against the actual Releases page, and are not the recommendation for this runtime. Local packaging (`pnpm pack`, then `dsh plugin --profile <name> add ./dsh-status-card-0.3.1.tgz`) remains valid; the desktop app's profile is `desktop`, `dsh web` uses `web`.
+The migration targets the locally installed DSH **0.2.0-rc.2** only. Plugin **0.3.1** is committed, tagged `v0.3.1`, and published as a GitHub Release whose assets are `dsh-status-card-0.3.1.tgz` and the same-bytes alias `dsh-status-card.tgz`; the recommended install is that asset, with `pnpm pack` from source as the equivalent path (both are built from the tagged source). Historical Git tags include `v0.2.1`, which is not the recommendation for this runtime. The desktop app's profile is `desktop`, `dsh web` uses `web`.
 
-Installing the plugin still requires reinstalling it (`pnpm pack`, then install the tgz) and restarting `dsh web` / the desktop app plus a hard browser refresh. Editing settings does not require restarting or creating a new conversation.
+Installing the plugin still requires reinstalling it (the Release asset, or `pnpm pack` from source) and restarting `dsh web` / the desktop app plus a hard browser refresh. Editing settings does not require restarting or creating a new conversation.
 
 ## Decision
 

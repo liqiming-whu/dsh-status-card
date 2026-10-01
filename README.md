@@ -50,7 +50,7 @@
 
 ## 兼容性与版本状态
 
-本机迁移目标是 DSH **0.2.0-rc.2**。插件 **0.3.1** 是本仓库的下一个版本，迁移与修复源码已按 `0.3.1` 提交并打上 `v0.3.1` 标签；GitHub Release 上的安装包仍以 [Releases](https://github.com/liqiming-whu/dsh-status-card/releases) 页面实际提供为准。该版本使用新的 Config 字段与 ConfigForms 接口，不支持旧 Settings API。GenUI 仍须单独安装并启用。
+本机迁移目标是 DSH **0.2.0-rc.2**。插件 **0.3.1** 已发布：[Release v0.3.1](https://github.com/liqiming-whu/dsh-status-card/releases/tag/v0.3.1) 提供 `dsh-status-card-0.3.1.tgz`（另附同名内容的 `dsh-status-card.tgz`）。该版本使用新的 Config 字段与 ConfigForms 接口，不支持旧 Settings API。GenUI 仍须单独安装并启用。
 
 ## 0.3.1 修复：设置页只读
 
@@ -62,9 +62,9 @@
 - **修复三（模板间距）**：模板里 `row` 节点不再携带 `gap`。GenUI 的 `row` schema 只接受 `items`/`wrap`/`spacer`，行间距固定为 12px（`--dsl-g-gap-md`，只有 `col` 支持 `gap`），此前的 `gap: 8` 被静默忽略并产生未知字段提示。设置页的本地预览也改为与 GenUI 一致：`row`/`grid` 固定 12px，`col` 读取自身 `gap`，spec 根节点的 `gap` 默认 16px。
 - **回归测试**：测试会调用 `@deepseek-ai/dsh-settings` 自己的 `volatileForm`/`projectForm`/`plainConfig` 复现宿主投影，再按浏览器方式解码，断言解码成功；同时遍历全部内置模板断言没有任何 `row` 节点带 `gap`。
 
-该修复需要重新安装插件（本地 `pnpm pack` 后安装 tgz），并重启 `dsh web` / 桌面应用 + 浏览器硬刷新；设置项本身的修改仍然即时生效、无需新建会话。
+该修复需要重新安装插件（下载 Release 附件或本地 `pnpm pack` 后安装 tgz），并重启 `dsh web` / 桌面应用 + 浏览器硬刷新；设置项本身的修改仍然即时生效、无需新建会话。
 
-## 安装（推荐本地打包）
+## 安装（推荐从 Release 下载）
 
 ### 1. 安装 GenUI
 
@@ -76,23 +76,29 @@ dsh plugin --profile web add @changfenhuang/dsh-genui
 
 ### 2. 安装状态卡片插件
 
-推荐从已完成迁移、版本号为 `0.3.1` 的本地源码打包安装：
+从 [Release v0.3.1](https://github.com/liqiming-whu/dsh-status-card/releases/tag/v0.3.1) 下载 `dsh-status-card-0.3.1.tgz` 后安装：
 
 ```sh
+dsh plugin --profile web add ./dsh-status-card-0.3.1.tgz
+```
+
+桌面应用使用的 profile 名是 `desktop`（`dsh web` 为 `web`），请按实际运行方式替换 `--profile`。
+
+也可以从源码自行打包（这样得到的产物与 Release 附件同源）：
+
+```sh
+git clone https://github.com/liqiming-whu/dsh-status-card.git
+cd dsh-status-card
 pnpm install
 pnpm pack
 dsh plugin --profile web add ./dsh-status-card-0.3.1.tgz
 ```
 
-上述命令在插件源码目录执行；本地打包不依赖已发布的 Release。该迁移已合入 `main` 并打上 `v0.3.1` 标签，从 GitHub 安装时可固定到该标签。桌面应用使用的 profile 名是 `desktop`（`dsh web` 为 `web`），请按实际运行方式替换 `--profile`。
-
 安装完成后重启 `dsh web` 或桌面应用，并在浏览器中硬刷新页面。
 
-## 历史版本与未来 Release
+## 历史版本
 
-现有历史 Git 标签包含 `v0.2.1`，它不是本次面向 DSH `0.2.0-rc.2` 的 `0.3.1` 迁移版本，不作为此运行时的推荐安装来源。历史发布资产请以 [Releases](https://github.com/liqiming-whu/dsh-status-card/releases) 页面实际列出的版本为准。
-
-只有在 Release 页面实际提供 `dsh-status-card-0.3.1.tgz` 后，才能下载该包并执行相同的安装命令；`v0.3.1` 标签已存在，但 GitHub Release 安装包不属于本次提交的产物。
+现有历史 Git 标签包含 `v0.2.1`，它不是本次面向 DSH `0.2.0-rc.2` 的 `0.3.1` 版本，不作为此运行时的推荐安装来源。历史发布资产请以 [Releases](https://github.com/liqiming-whu/dsh-status-card/releases) 页面实际列出的版本为准。
 
 ## 使用
 

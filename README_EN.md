@@ -50,7 +50,7 @@ This plugin's `dsh.client.inject` has been synchronized to the locally installed
 
 ## Compatibility and release status
 
-The local migration target is DSH **0.2.0-rc.2**. Plugin **0.3.1** is this repository's next version: the migration and fixes are committed as `0.3.1` and tagged `v0.3.1`, while a GitHub Release tarball still depends on what the [Releases](https://github.com/liqiming-whu/dsh-status-card/releases) page actually offers. It uses the new Config fields and ConfigForms interface rather than the old Settings API. GenUI must still be installed and enabled separately.
+The local migration target is DSH **0.2.0-rc.2**. Plugin **0.3.1** is published: [Release v0.3.1](https://github.com/liqiming-whu/dsh-status-card/releases/tag/v0.3.1) provides `dsh-status-card-0.3.1.tgz` (plus `dsh-status-card.tgz` carrying the same bytes). It uses the new Config fields and ConfigForms interface rather than the old Settings API. GenUI must still be installed and enabled separately.
 
 ## 0.3.1 fix: read-only settings page
 
@@ -62,9 +62,9 @@ The local migration target is DSH **0.2.0-rc.2**. Plugin **0.3.1** is this repos
 - **Fix 3 (template spacing)**: `row` nodes in the templates no longer carry `gap`. GenUI's `row` schema accepts only `items`/`wrap`/`spacer` and fixes row spacing at 12px (`--dsl-g-gap-md`; only `col` supports `gap`), so the previous `gap: 8` was silently ignored and produced an unknown-field warning. The settings-page preview now matches GenUI too: `row`/`grid` are fixed at 12px, `col` reads its own `gap`, and the spec root `gap` defaults to 16px.
 - **Regression test**: the test calls `@deepseek-ai/dsh-settings`' own `volatileForm` / `projectForm` / `plainConfig` to reproduce the host projection, then decodes it the way the browser does and asserts that decoding succeeds; it also walks every built-in template and asserts that no `row` node carries a `gap`.
 
-The fix requires reinstalling the plugin (local `pnpm pack`, then install the tgz) and restarting `dsh web` / the desktop app plus a browser hard refresh; settings changes themselves still take effect immediately with no new conversation required.
+The fix requires reinstalling the plugin (download the Release asset, or run `pnpm pack` locally) and restarting `dsh web` / the desktop app plus a browser hard refresh; settings changes themselves still take effect immediately with no new conversation required.
 
-## Installation (local packaging recommended)
+## Installation (download from the Release)
 
 ### 1. Install GenUI
 
@@ -76,23 +76,29 @@ dsh plugin --profile web add @changfenhuang/dsh-genui
 
 ### 2. Install dsh-status-card
 
-Package local source containing the completed migration and version `0.3.1` (recommended):
+Download `dsh-status-card-0.3.1.tgz` from [Release v0.3.1](https://github.com/liqiming-whu/dsh-status-card/releases/tag/v0.3.1) and install it:
 
 ```sh
+dsh plugin --profile web add ./dsh-status-card-0.3.1.tgz
+```
+
+The desktop app uses the profile name `desktop` (`web` for `dsh web`); replace `--profile` to match how you run DSH.
+
+You can also build from source (which reproduces the same artifact as the Release asset):
+
+```sh
+git clone https://github.com/liqiming-whu/dsh-status-card.git
+cd dsh-status-card
 pnpm install
 pnpm pack
 dsh plugin --profile web add ./dsh-status-card-0.3.1.tgz
 ```
 
-Run these commands in the plugin source directory. Local packaging does not require a published Release. The migration is merged into `main` and tagged `v0.3.1`, so a GitHub install can pin that tag. The desktop app uses the profile name `desktop` (`web` for `dsh web`); replace `--profile` to match how you run DSH.
-
 Restart `dsh web` or the desktop app after installation and hard-refresh the browser page.
 
-## Historical versions and future Releases
+## Historical versions
 
-Existing historical Git tags include `v0.2.1`. That tag is not the `0.3.1` migration for DSH `0.2.0-rc.2` and is not the recommended installation source for this runtime. Consult [Releases](https://github.com/liqiming-whu/dsh-status-card/releases) for the historical assets actually available.
-
-Only after a Release actually provides `dsh-status-card-0.3.1.tgz` should you download it and use the same installation command. The `v0.3.1` tag now exists, but a GitHub Release tarball is not part of this commit's output.
+Existing historical Git tags include `v0.2.1`. That tag is not the `0.3.1` version for DSH `0.2.0-rc.2` and is not the recommended installation source for this runtime. Consult [Releases](https://github.com/liqiming-whu/dsh-status-card/releases) for the historical assets actually available.
 
 ## Usage
 
