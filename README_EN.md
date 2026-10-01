@@ -84,7 +84,7 @@ dsh plugin --profile web add ./dsh-status-card-0.3.1.tgz
 
 The desktop app uses the profile name `desktop` (`web` for `dsh web`); replace `--profile` to match how you run DSH.
 
-You can also build from the `v0.3.1` tag's source. It is the **same source** the Release asset was built from, but the tgz `pnpm pack` produces is not guaranteed to be byte-identical to that asset (with `core.autocrlf` in effect, checkout converts tracked text files to CRLF while the `lib/**` build outputs stay identical):
+You can also build from the `v0.3.1` tag's source. It is the **same source** the Release asset was built from, but the tgz `pnpm pack` produces is not guaranteed to be byte-identical: with `core.autocrlf` in effect, checkout converts tracked text files to CRLF. The `lib/**` build outputs matched byte-for-byte only in this re-verification under the same toolchain; that is not a promise across Node/pnpm versions or platforms.
 
 ```sh
 git clone https://github.com/liqiming-whu/dsh-status-card.git
