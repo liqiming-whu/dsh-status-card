@@ -15,6 +15,25 @@ function inspect(id, expectedParts, locale = 'zh') {
   return spec
 }
 
+// GenUI's `row` is a fixed 12px flex row: its schema accepts only
+// items/wrap/spacer and its renderer never reads `gap` (only `col` does), so a
+// `gap` there is silently dropped and raises an unknown-field warning. Lock the
+// constraint down so a template edit cannot quietly reintroduce it.
+function assertNoRowGap(spec, label) {
+  const walk = (value, path) => {
+    if (Array.isArray(value)) return value.forEach((item, index) => walk(item, `${path}[${index}]`))
+    if (value === null || typeof value !== 'object') return
+    if (value.type === 'row' && 'gap' in value) throw new Error(`${label}: row at ${path} carries an unsupported gap`)
+    for (const [key, child] of Object.entries(value)) walk(child, `${path}.${key}`)
+  }
+  walk(spec, '$')
+}
+for (const locale of ['zh', 'en']) {
+  for (const id of ['bootstrap', 'a', 'b', 'c', 'd', 'e', 'f', 'custom']) {
+    assertNoRowGap(createTemplateSpec(id, '标题', DEFAULT_CUSTOM_TEMPLATE, locale), `${locale}/${id}`)
+  }
+}
+
 inspect('bootstrap', ['就绪', '处理中', '当前任务'])
 inspect('a', ['🌸 AI 状态', '😊 开心', '🐾 陪伴中', '超可爱模式', '可爱度'])
 inspect('b', ['🧭 专注模式', '就绪', '处理中', '当前任务', '正在专注处理你的请求。'])

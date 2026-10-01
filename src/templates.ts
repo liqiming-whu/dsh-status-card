@@ -82,7 +82,7 @@ export function createBootstrapSpec(cardTitle: string, locale: Locale = 'zh'): G
     gap: 10,
     items: [
       {
-        type: 'row', gap: 8, items: locale === 'zh' ? [
+        type: 'row', items: locale === 'zh' ? [
           { type: 'badge', label: '就绪', tone: 'success', icon: '✅' },
           { type: 'badge', label: '处理中', tone: 'accent', icon: '🧠' },
           { type: 'badge', label: '能量充足', tone: 'warn', icon: '⚡' },
@@ -101,7 +101,7 @@ export function createTemplateASpec(cardTitle: string, locale: Locale = 'zh'): G
   return {
     title: cardTitle, gap: 10, items: [{
       type: 'card', title: locale === 'zh' ? '🌸 AI 状态' : '🌸 AI Status', items: [
-        { type: 'row', gap: 8, items: locale === 'zh' ? [
+        { type: 'row', items: locale === 'zh' ? [
           { type: 'stat', label: '心情', value: '😊 开心' },
           { type: 'stat', label: '状态', value: '🐾 陪伴中' },
           { type: 'stat', label: '能量', value: '⚡ 120%' },
@@ -122,7 +122,7 @@ export function createTemplateBSpec(cardTitle: string, locale: Locale = 'zh'): G
   return {
     title: cardTitle, gap: 10, items: [{
       type: 'card', title: locale === 'zh' ? '🧭 专注模式' : '🧭 Focus', items: [
-        { type: 'row', gap: 8, items: locale === 'zh' ? [
+        { type: 'row', items: locale === 'zh' ? [
           { type: 'badge', label: '就绪', tone: 'success', icon: '🟢' },
           { type: 'badge', label: '处理中', tone: 'accent', icon: '🎯' },
           { type: 'badge', label: '高能', tone: 'warn', icon: '⚡' },
@@ -142,7 +142,7 @@ export function createTemplateCSpec(cardTitle: string, locale: Locale = 'zh'): G
   return {
     title: cardTitle, gap: 10, items: [{
       type: 'card', title: locale === 'zh' ? '🧠 Agent 控制台' : '🧠 Agent Console', items: [
-        { type: 'row', gap: 8, items: locale === 'zh' ? [
+        { type: 'row', items: locale === 'zh' ? [
           { type: 'stat', label: '模式', value: '🔍 分析' },
           { type: 'stat', label: '阶段', value: '🛠️ 执行' },
           { type: 'stat', label: '负载', value: '⚡ 82%' },
@@ -163,7 +163,7 @@ export function createTemplateDSpec(cardTitle: string, locale: Locale = 'zh'): G
   return {
     title: cardTitle, gap: 10, items: [{
       type: 'card', title: locale === 'zh' ? '🚀 神经甲板' : '🚀 Neural Deck', items: [
-        { type: 'row', gap: 8, items: locale === 'zh' ? [
+        { type: 'row', items: locale === 'zh' ? [
           { type: 'stat', label: '核心', value: '🟣 在线' },
           { type: 'stat', label: '任务', value: '🛰️ 编排中' },
           { type: 'stat', label: '功率', value: '⚡ 96%' },
@@ -184,7 +184,7 @@ export function createTemplateESpec(cardTitle: string, locale: Locale = 'zh'): G
   return {
     title: cardTitle, gap: 10, items: [{
       type: 'card', title: locale === 'zh' ? '☕ 暖心小站' : '☕ Cozy Corner', items: [
-        { type: 'row', gap: 8, items: locale === 'zh' ? [
+        { type: 'row', items: locale === 'zh' ? [
           { type: 'stat', label: '心情', value: '🥰 温柔' },
           { type: 'stat', label: '陪伴', value: '🫶 进行中' },
           { type: 'stat', label: '温度', value: '🌤️ 98%' },
@@ -205,7 +205,7 @@ export function createTemplateFSpec(cardTitle: string, locale: Locale = 'zh'): G
   return {
     title: cardTitle, gap: 10, items: [{
       type: 'card', title: locale === 'zh' ? '💻 开发运行时' : '💻 Dev Runtime', items: [
-        { type: 'row', gap: 8, items: locale === 'zh' ? [
+        { type: 'row', items: locale === 'zh' ? [
           { type: 'stat', label: '构建', value: '🟢 就绪' },
           { type: 'stat', label: '任务', value: '🧩 编码中' },
           { type: 'stat', label: 'CPU', value: '⚡ 87%' },

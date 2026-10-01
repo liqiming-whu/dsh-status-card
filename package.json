@@ -1,6 +1,6 @@
 {
   "name": "dsh-status-card",
-  "version": "0.2.1",
+  "version": "0.3.1",
   "description": "Inject a configurable dsh-ui status card instruction before every DSH agent reply",
   "keywords": ["deepseek-harness", "dsh", "dsh-plugin", "genui", "status-card"],
   "repository": { "type": "git", "url": "git+https://github.com/liqiming-whu/dsh-status-card.git" },
@@ -21,13 +21,9 @@
     "client": {
       "platform": "web",
       "inject": [
-        "@omdsh-dev/dsh-genui",
-        "@deepseek-ai/dsh-api-remotes",
-        "@deepseek-ai/dsh-client-runtime",
-        "@deepseek-ai/dsh-client-connection",
+        "@changfenhuang/dsh-genui",
         "@deepseek-ai/dsh-client-ui-settings",
-        "@deepseek-ai/dsh-client-ui-slots",
-        "@deepseek-ai/dsh-client-web-react"
+        "@deepseek-ai/dsh-client-ui-renderer"
       ]
     }
   },
@@ -39,29 +35,23 @@
     "prepare": "pnpm run build"
   },
   "peerDependencies": {
-    "@deepseek-ai/cordis": "^4.0.1",
-    "@deepseek-ai/dsh-api-remotes": "^0.1.0-rc.7",
-    "@deepseek-ai/dsh-client-connection": "^0.1.0-rc.7",
-    "@deepseek-ai/dsh-client-runtime": "^0.1.0-rc.7",
-    "@deepseek-ai/dsh-client-ui-settings": "^0.1.0-rc.7",
-    "@deepseek-ai/dsh-client-ui-slots": "^0.1.0-rc.7",
-    "@deepseek-ai/dsh-client-web-react": "^0.1.0-rc.7",
-    "@deepseek-ai/dsh-settings": "^0.1.0-rc.7",
-    "@deepseek-ai/dsh-system-prompt": "^0.1.0-rc.7",
-    "@deepseek-ai/schemastery": "^3.0.0",
+    "@deepseek-ai/cordis": "~4.0.4",
+    "@deepseek-ai/dsh-client-ui-settings": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-client-ui-slots": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-client-ui-renderer": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-settings": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-system-prompt": "0.2.0-rc.2",
+    "@deepseek-ai/schemastery": "~3.18.4",
     "react": "^18.0.0 || ^19.0.0"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis": "^4.0.1",
-    "@deepseek-ai/dsh-api-remotes": "^0.1.0-rc.7",
-    "@deepseek-ai/dsh-client-connection": "^0.1.0-rc.7",
-    "@deepseek-ai/dsh-client-runtime": "^0.1.0-rc.7",
-    "@deepseek-ai/dsh-client-ui-settings": "^0.1.0-rc.7",
-    "@deepseek-ai/dsh-client-ui-slots": "^0.1.0-rc.7",
-    "@deepseek-ai/dsh-client-web-react": "^0.1.0-rc.7",
-    "@deepseek-ai/dsh-settings": "^0.1.0-rc.7",
-    "@deepseek-ai/dsh-system-prompt": "^0.1.0-rc.7",
-    "@deepseek-ai/schemastery": "^3.0.0",
+    "@deepseek-ai/cordis": "~4.0.4",
+    "@deepseek-ai/dsh-client-ui-settings": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-client-ui-slots": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-client-ui-renderer": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-settings": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-system-prompt": "0.2.0-rc.2",
+    "@deepseek-ai/schemastery": "~3.18.4",
     "@types/node": "^22.0.0",
     "@types/react": "^18.3.0",
     "react": "18.3.1",

@@ -37,9 +37,11 @@ function PreviewNode({ value, locale, depth = 0 }: { value: unknown; locale: Loc
     : null
 
   if (type === 'card') return <div style={surface}>{node.title ? <strong>{text(node.title)}</strong> : null}{children}</div>
-  if (type === 'row') return <div style={{ display: 'flex', gap: Number(node.gap) || 8, flexWrap: 'wrap', alignItems: 'center' }}>{children}</div>
-  if (type === 'col') return <div style={{ display: 'flex', flexDirection: 'column', gap: Number(node.gap) || 8 }}>{children}</div>
-  if (type === 'grid') return <div style={{ display: 'grid', gridTemplateColumns: `repeat(${Math.max(1, Number(node.cols) || 2)}, minmax(0, 1fr))`, gap: 8 }}>{children}</div>
+  // GenUI's `row` is a fixed 12px flex row (--dsl-g-gap-md) and its renderer
+  // never reads `node.gap`, so the preview must not honour one either.
+  if (type === 'row') return <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>{children}</div>
+  if (type === 'col') return <div style={{ display: 'flex', flexDirection: 'column', gap: Number(node.gap) || 12 }}>{children}</div>
+  if (type === 'grid') return <div style={{ display: 'grid', gridTemplateColumns: `repeat(${Math.max(1, Number(node.cols) || 2)}, minmax(0, 1fr))`, gap: 12 }}>{children}</div>
   if (type === 'stat') return <div style={{ minWidth: 110, flex: '1 1 110px' }}><div style={{ opacity: .65, fontSize: 12 }}>{text(node.label)}</div><strong style={{ fontSize: 18 }}>{text(node.value)}</strong>{node.delta ? <div style={{ fontSize: 12 }}>{text(node.delta)}</div> : null}</div>
   if (type === 'badge') return <span style={{ display: 'inline-flex', gap: 5, alignItems: 'center', width: 'fit-content', padding: '4px 9px', borderRadius: 999, fontSize: 12, ...badgeTone[text(node.tone)] }}>{node.icon ? <span aria-hidden>{text(node.icon)}</span> : null}{text(node.label)}</span>
   if (type === 'progress') {
@@ -55,5 +57,6 @@ function PreviewNode({ value, locale, depth = 0 }: { value: unknown; locale: Loc
 }
 
 export function StatusCardPreview({ spec, locale }: { spec: GenuiSpec; locale: Locale }) {
-  return <div style={{ display: 'flex', flexDirection: 'column', gap: spec.gap ?? 10 }}>{spec.title ? <strong>{spec.title}</strong> : null}{spec.items.map((item, index) => <PreviewNode key={index} value={item} locale={locale} />)}</div>
+  // GenUI reads the spec-level gap as `spec.gap ?? 16`; mirror that default.
+  return <div style={{ display: 'flex', flexDirection: 'column', gap: spec.gap ?? 16 }}>{spec.title ? <strong>{spec.title}</strong> : null}{spec.items.map((item, index) => <PreviewNode key={index} value={item} locale={locale} />)}</div>
 }

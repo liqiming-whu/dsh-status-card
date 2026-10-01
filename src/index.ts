@@ -2,12 +2,13 @@ import type { Context } from '@deepseek-ai/cordis'
 import type { AssembleContext } from '@deepseek-ai/dsh-system-prompt'
 import '@deepseek-ai/dsh-system-prompt'
 import z from '@deepseek-ai/schemastery'
-import { installSettingsSection, settingsNamespace } from '@deepseek-ai/dsh-settings'
-import { createBootstrapSpec, createTemplateSpec, defaultCardTitle, DEFAULT_CUSTOM_TEMPLATE, localizeDefaultTitle, LOCALES, parseCustomTemplate, TEMPLATE_IDS, type Locale, type TemplateId } from './templates.ts'
+import '@deepseek-ai/dsh-settings'
+import { createBootstrapSpec, createTemplateSpec, defaultCardTitle, DEFAULT_CUSTOM_TEMPLATE, localizeDefaultTitle, LOCALES, TEMPLATE_IDS, type Locale, type TemplateId } from './templates.ts'
 
 export const name = 'status-card'
 export const inject = ['systemPrompt']
-export const SETTINGS_NAMESPACE = settingsNamespace('status-card')
+// Settings in DSH 0.2 are addressed by the profile entry id.
+export const SETTINGS_NAMESPACE = 'status-card'
 
 export interface StatusCardSettings {
   enabled: boolean
@@ -15,10 +16,6 @@ export interface StatusCardSettings {
   cardTitle: string
   template: TemplateId
   customTemplate: string
-}
-
-export interface Config extends StatusCardSettings {
-  sectionOrder: number
 }
 
 export const SettingsSchema: z<StatusCardSettings> = z.object({
@@ -29,14 +26,32 @@ export const SettingsSchema: z<StatusCardSettings> = z.object({
   customTemplate: z.string().default(DEFAULT_CUSTOM_TEMPLATE),
 })
 
-export const Config: z<Config> = z.object({
-  enabled: z.boolean().default(true),
-  locale: z.union([...LOCALES]).default('zh'),
-  cardTitle: z.string().default('AI 状态'),
-  template: z.union([...TEMPLATE_IDS]).default('bootstrap'),
-  customTemplate: z.string().default(DEFAULT_CUSTOM_TEMPLATE),
+export const Config = z.object({
+  enabled: z.boolean().default(true).volatile(),
+  locale: z.union([...LOCALES]).default('zh').volatile(),
+  cardTitle: z.string().default('AI 状态').volatile(),
+  template: z.union([...TEMPLATE_IDS]).default('bootstrap').volatile(),
+  // Plain string, never `z.transform`: DSH serializes each volatile field into a
+  // form schema for the browser, and a transform callback cannot survive that
+  // round trip (the revived callback loses its `toJSON`, so the browser decode
+  // fails). A failed decode leaves the settings page read-only, which is exactly
+  // what a transform here caused. Custom JSON is validated by
+  // `parseCustomTemplate` in the settings UI and defensively at injection time.
+  customTemplate: z.string().default(DEFAULT_CUSTOM_TEMPLATE).volatile(),
   sectionOrder: z.number().default(90),
 })
+
+export type Config = ReturnType<typeof Config>
+
+export function readSettings(entry: Config): StatusCardSettings {
+  return {
+    enabled: entry.enabled.get(),
+    locale: entry.locale.get(),
+    cardTitle: entry.cardTitle.get(),
+    template: entry.template.get(),
+    customTemplate: entry.customTemplate.get(),
+  }
+}
 
 function sanitizeTitle(value: string, locale: Locale): string {
   const sanitized = value.replace(/[\u0000-\u001f\u007f]+/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 80)
@@ -68,27 +83,17 @@ export function buildStatusCardInstruction(settings: StatusCardSettings): string
 }
 
 export function apply(ctx: Context, entry: Config): void {
-  const entrySettings: StatusCardSettings = {
-    enabled: entry.enabled,
-    locale: entry.locale,
-    cardTitle: entry.cardTitle,
-    template: entry.template,
-    customTemplate: entry.customTemplate,
-  }
-  let source = (): StatusCardSettings => entrySettings
-
-  installSettingsSection(ctx, SETTINGS_NAMESPACE, SettingsSchema, entrySettings, {
-    setSource: current => { source = current },
-    onChange: () => {},
-    validate: value => {
-      if (value.template === 'custom') parseCustomTemplate(value.customTemplate, sanitizeTitle(value.cardTitle, value.locale), value.locale)
-    },
+  // The optional child follows Settings replacements without making prompt
+  // injection depend on the settings UI. The policy belongs to this plugin.
+  ctx.inject(['settings'], child => {
+    child.effect(() => child.settings.configure({ auto: false }, ctx.fiber))
   })
 
   ctx.effect(() => ctx.systemPrompt.section({
     name: 'status-card',
     order: entry.sectionOrder,
-    text: (_assembly: AssembleContext) => buildStatusCardInstruction(source()),
+    interpolate: false,
+    text: (_assembly: AssembleContext) => buildStatusCardInstruction(readSettings(entry)),
   }))
 }
 
