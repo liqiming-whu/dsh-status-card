@@ -30,8 +30,8 @@
   "scripts": {
     "build": "tsdown",
     "images": "node scripts/generate-card-images.mjs",
-    "check": "tsc --noEmit && pnpm run build && node test/injection.test.mjs && node test/settings.test.mjs && node test/templates.test.mjs",
-    "test": "pnpm run build && node test/injection.test.mjs && node test/settings.test.mjs && node test/templates.test.mjs",
+    "check": "tsc --noEmit && pnpm run build && node test/injection.test.mjs && node test/loader-settings.test.mjs && node test/settings.test.mjs && node test/templates.test.mjs",
+    "test": "pnpm run build && node test/injection.test.mjs && node test/loader-settings.test.mjs && node test/settings.test.mjs && node test/templates.test.mjs",
     "prepare": "pnpm run build"
   },
   "peerDependencies": {
@@ -46,6 +46,7 @@
   },
   "devDependencies": {
     "@deepseek-ai/cordis": "~4.0.4",
+    "@deepseek-ai/cordis-plugin-loader": "~1.0.5",
     "@deepseek-ai/dsh-client-ui-settings": "0.2.0-rc.2",
     "@deepseek-ai/dsh-client-ui-slots": "0.2.0-rc.2",
     "@deepseek-ai/dsh-client-ui-renderer": "0.2.0-rc.2",
