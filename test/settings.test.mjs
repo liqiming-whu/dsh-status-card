@@ -56,11 +56,13 @@ assert.ok(!host.includes('settingsNamespace('))
 assert.ok(host.includes('locale: z.union([...LOCALES])'))
 assert.ok(!clientSource.includes('settingsScope'))
 assert.ok(!clientSource.includes('as never'))
-for (const deps of [pkg.peerDependencies, pkg.devDependencies]) {
-  for (const [name, version] of Object.entries(deps)) {
-    if (name.startsWith('@deepseek-ai/dsh-')) assert.equal(version, '0.2.0-rc.2')
-    assert.ok(!['@deepseek-ai/dsh-client-runtime', '@deepseek-ai/dsh-client-web-react'].includes(name))
-  }
+for (const [name, version] of Object.entries(pkg.peerDependencies)) {
+  if (name.startsWith('@deepseek-ai/dsh-')) assert.equal(version, '>=0.2.0-rc.2 <0.3.0-0')
+  assert.ok(!['@deepseek-ai/dsh-client-runtime', '@deepseek-ai/dsh-client-web-react'].includes(name))
+}
+for (const [name, version] of Object.entries(pkg.devDependencies)) {
+  if (name.startsWith('@deepseek-ai/dsh-')) assert.equal(version, '0.2.1-rc.2')
+  assert.ok(!['@deepseek-ai/dsh-client-runtime', '@deepseek-ai/dsh-client-web-react'].includes(name))
 }
 
 for (const field of ['enabled', 'locale', 'cardTitle', 'template', 'customTemplate']) {
