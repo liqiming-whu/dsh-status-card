@@ -40,19 +40,27 @@
 
 ## Requirements
 
-- DeepSeek Harness **0.2.0-rc.2** installed. The upcoming plugin version **0.3.1** supports only this runtime version; compatibility with other versions is not claimed.
-- `pnpm` available on `PATH`.
-- `@changfenhuang/dsh-genui` (version **0.11.3** as actually installed on this machine) installed and enabled in the Web profile. The package name comes from the package actually installed locally; the source repository is still [omdsh-dev/dsh-genui](https://github.com/omdsh-dev/dsh-genui), but the name published to the registry and installed through the **dsh-market plugin marketplace** is `@changfenhuang/dsh-genui`. Install and enable it before installing this plugin.
+- A DSH 0.2.x runtime whose relevant `@deepseek-ai/dsh-*` packages satisfy `>=0.2.0-rc.2 <0.3.0-0` (including `0.2.0-rc.2` and `0.2.1-rc.2`). This is v0.3.2's declared dependency range; see the validation limits below.
+- Node.js satisfying `^22.19.0 || >=24.0.0` and `pnpm` satisfying `>=11.7.0 <12` available on `PATH` (the project specifies `pnpm@11.19.0`).
+- A runtime-compatible version of `@changfenhuang/dsh-genui` separately installed and enabled in the profile you actually run (`web` for `dsh web`, `desktop` for the desktop app). Its source repository is [omdsh-dev/dsh-genui](https://github.com/omdsh-dev/dsh-genui); its package name in the **dsh-market plugin marketplace** is `@changfenhuang/dsh-genui`. The previously recorded local version **0.11.3** is historical installation information, not evidence of validation across all DSH 0.2.x hosts.
 
-This plugin's `dsh.client.inject` has been synchronized to the locally installed name `@changfenhuang/dsh-genui`. It uses GenUI through that injection but does not declare GenUI as a pnpm dependency. That keeps installation from resolving a transitive GitHub dependency; GenUI remains a required runtime prerequisite for rendering status-card fences.
+This plugin's `dsh.client.inject` declares `@changfenhuang/dsh-genui`, `@deepseek-ai/dsh-client-ui-settings`, and `@deepseek-ai/dsh-client-ui-renderer`. GenUI is not automatically fetched as a pnpm dependency; it remains a separate runtime prerequisite for rendering status-card fences.
 
 > Without GenUI, the status-card formatting instruction is still injected, but `dsh-ui` fences in the conversation cannot render. Install and enable a GenUI version compatible with the current runtime first.
 
 ## Compatibility and release status
 
-The local migration target is DSH **0.2.0-rc.2**. Plugin **0.3.1** is published: [Release v0.3.1](https://github.com/liqiming-whu/dsh-status-card/releases/tag/v0.3.1) provides `dsh-status-card-0.3.1.tgz` (plus `dsh-status-card.tgz` carrying the same bytes). It uses the new Config fields and ConfigForms interface rather than the old Settings API. GenUI must still be installed and enabled separately.
+The current recommended version is the published **v0.3.2**: [Release v0.3.2](https://github.com/liqiming-whu/dsh-status-card/releases/tag/v0.3.2), published on 2026-10-20, provides `dsh-status-card-0.3.2.tgz`. This Release does not provide a `dsh-status-card.tgz` alias; use the versioned asset.
 
-## 0.3.1 fix: read-only settings page
+- **Declared dependencies**: relevant DSH peerDependencies now use `>=0.2.0-rc.2 <0.3.0-0`, and the removed `@deepseek-ai/dsh-client-ui-slots` peerDependency has been dropped. Other peer requirements remain `@deepseek-ai/cordis ~4.0.4`, `@deepseek-ai/schemastery ~3.18.4`, and `react ^18.0.0 || ^19.0.0`; see [package.json](./package.json) for the full configuration.
+- **Local validation**: the Release notes record passing TypeScript checks and all local tests against DSH **0.2.1-rc.2** devDependencies. The earlier v0.3.1 local migration targeted **0.2.0-rc.2**.
+- **Real-host validation**: the declared range and local test results do not establish end-to-end validation across all DSH host configurations or guarantee compatibility for every DSH/GenUI combination.
+
+The current version continues to use Config fields and ConfigForms rather than the old Settings API. GenUI must still be installed and enabled separately.
+
+## Historical fix (v0.3.1): read-only settings page
+
+The following issues were fixed in v0.3.1, and v0.3.2 retains those fixes. This is historical context, not a list of known issues in the latest version.
 
 - **Symptom**: after installation, the "Enable reply status card" checkbox and the template dropdown in the settings page were all greyed out and could not be operated.
 - **Root cause**: `customTemplate` previously used `z.transform`. DSH projects every volatile field into a serialized form schema for the browser (the host-side `plainSchema` does `new z(schema.toJSON())` and then `form.toJSON()` again); once the callback is revived through `new Function` it no longer carries `toJSON`, so the second serialization drops it entirely, the browser decode reports `callback is not a function`, that namespace snapshot never reaches ready, and the page becomes read-only.
@@ -62,7 +70,7 @@ The local migration target is DSH **0.2.0-rc.2**. Plugin **0.3.1** is published:
 - **Fix 3 (template spacing)**: `row` nodes in the templates no longer carry `gap`. GenUI's `row` schema accepts only `items`/`wrap`/`spacer` and fixes row spacing at 12px (`--dsl-g-gap-md`; only `col` supports `gap`), so the previous `gap: 8` was silently ignored and produced an unknown-field warning. The settings-page preview now matches GenUI too: `row`/`grid` are fixed at 12px, `col` reads its own `gap`, and the spec root `gap` defaults to 16px.
 - **Regression test**: the test calls `@deepseek-ai/dsh-settings`' own `volatileForm` / `projectForm` / `plainConfig` to reproduce the host projection, then decodes it the way the browser does and asserts that decoding succeeds; it also walks every built-in template and asserts that no `row` node carries a `gap`.
 
-The fix requires reinstalling the plugin (download the Release asset, or run `pnpm pack` locally) and restarting `dsh web` / the desktop app plus a browser hard refresh; settings changes themselves still take effect immediately with no new conversation required.
+Installations still running a version from before the fix need a plugin upgrade (v0.3.2 below is recommended), followed by restarting `dsh web` / the desktop app and a browser hard refresh; settings changes themselves still take effect immediately with no new conversation required.
 
 ## Installation (download from the Release)
 
@@ -76,30 +84,30 @@ dsh plugin --profile web add @changfenhuang/dsh-genui
 
 ### 2. Install dsh-status-card
 
-Download `dsh-status-card-0.3.1.tgz` from [Release v0.3.1](https://github.com/liqiming-whu/dsh-status-card/releases/tag/v0.3.1) and install it:
+Download [dsh-status-card-0.3.2.tgz](https://github.com/liqiming-whu/dsh-status-card/releases/download/v0.3.2/dsh-status-card-0.3.2.tgz) from [Release v0.3.2](https://github.com/liqiming-whu/dsh-status-card/releases/tag/v0.3.2), then install it from the download directory:
 
 ```sh
-dsh plugin --profile web add ./dsh-status-card-0.3.1.tgz
+dsh plugin --profile web add ./dsh-status-card-0.3.2.tgz
 ```
 
-The desktop app uses the profile name `desktop` (`web` for `dsh web`); replace `--profile` to match how you run DSH.
+The desktop app uses the profile name `desktop` (`web` for `dsh web`). In both the GenUI and status-card installation commands above, replace `--profile` to match how you run DSH, and enable both plugins in that same profile.
 
-You can also build from the `v0.3.1` tag's source. It is the **same source** the Release asset was built from, but the tgz `pnpm pack` produces is not guaranteed to be byte-identical: with `core.autocrlf` in effect, checkout converts tracked text files to CRLF. The `lib/**` build outputs matched byte-for-byte only in this re-verification under the same toolchain; that is not a promise across Node/pnpm versions or platforms.
+You can also build from the `v0.3.2` tag's source. The tgz produced by `pnpm pack` is not guaranteed to be byte-identical to the Release asset: checkout line-ending settings, Node/pnpm versions, and platforms can affect the result. The earlier byte-for-byte re-verification of v0.3.1 is not a validation result for v0.3.2.
 
 ```sh
 git clone https://github.com/liqiming-whu/dsh-status-card.git
 cd dsh-status-card
-git checkout v0.3.1
+git checkout v0.3.2
 pnpm install
 pnpm pack
-dsh plugin --profile web add ./dsh-status-card-0.3.1.tgz
+dsh plugin --profile web add ./dsh-status-card-0.3.2.tgz
 ```
 
 Restart `dsh web` or the desktop app after installation and hard-refresh the browser page.
 
 ## Historical versions
 
-Existing historical Git tags include `v0.2.1`. That tag is not the `0.3.1` version for DSH `0.2.0-rc.2` and is not the recommended installation source for this runtime. Consult [Releases](https://github.com/liqiming-whu/dsh-status-card/releases) for the historical assets actually available.
+`v0.3.1` is the historical version targeting DSH `0.2.0-rc.2` and includes the settings-page fixes described above; earlier versions such as `v0.2.1` also remain in the repository. Install `v0.3.2` as the current recommendation. Consult [Releases](https://github.com/liqiming-whu/dsh-status-card/releases) for the historical assets actually available.
 
 ## Usage
 
@@ -119,7 +127,7 @@ The plugin registers a system-prompt section through `ctx.systemPrompt.section()
 
 - Remove the old `installSettingsSection`, `settingsNamespace`, and `settingsScope`; manage settings through Config / ConfigForms.
 - Replace the old `dsh-client-runtime` / `web-react` usage: the Client Context type comes from `@deepseek-ai/cordis` (peer `~4.0.4`), and the type-only import `import type {} from '@deepseek-ai/dsh-client-ui-renderer/client'` provides slots Service declaration augmentation. Do not use a side-effect import, which would leave a prohibited cross-plugin runtime require in the browser bundle.
-- The `ConfigForm` type comes from `@deepseek-ai/dsh-client-ui-settings/client`; corresponding DSH dependencies use the exact version `0.2.0-rc.2`.
+- The `ConfigForm` type comes from `@deepseek-ai/dsh-client-ui-settings/client`. The migration originally targeted `0.2.0-rc.2`; v0.3.2 uses the DSH peer range `>=0.2.0-rc.2 <0.3.0-0` and pins the corresponding devDependencies to `0.2.1-rc.2`.
 
 It does not call `agent.inject()`, register `systemPrompt.context()`, or append `user/message` / `assistant/message` events, so the formatting instruction does not accumulate in conversation history.
 
