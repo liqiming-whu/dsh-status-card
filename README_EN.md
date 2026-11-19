@@ -21,6 +21,10 @@
 
 ## Six template previews
 
+Start with **A** for a playful companion: an energy ring leaves room for a compact mood sheet. Choose **B** for a quieter header with a single status line and progress bar. **C** separates analysis, execution and verification; **D** pairs short metrics with sparklines; **E** places a note beside a rapport ring; **F** gives build, tests and code changes their own columns.
+
+Preview values are layout examples, not measured telemetry. Preset IDs A–F, the basic preset and custom JSON remain compatible. To use the redesigned presets from this checkout, run `pnpm run check` and `pnpm pack`, then install the local package. The older release asset documented below does not include these designs.
+
 <table>
   <tr>
     <td width="50%"><strong>A · Soft Vitality</strong><br><img src="./docs/images/templates/en/template-a.svg" alt="Template A Soft Vitality English preview" width="560"></td>

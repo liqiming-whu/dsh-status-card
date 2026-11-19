@@ -35,20 +35,48 @@ for (const locale of ['zh', 'en']) {
 }
 
 inspect('bootstrap', ['就绪', '处理中', '当前任务'])
-inspect('a', ['🌸 AI 状态', '😊 开心', '🐾 陪伴中', '超可爱模式', '可爱度'])
-inspect('b', ['🧭 专注模式', '就绪', '处理中', '当前任务', '正在专注处理你的请求。'])
-inspect('c', ['🧠 Agent 控制台', '🔍 分析', '🛠️ 执行', '状态正常', '可靠结果'])
-inspect('d', ['🚀 神经甲板', '🟣 在线', '🛰️ 编排中', '深度思考', '推理链路'])
-inspect('e', ['☕ 暖心小站', '🥰 温柔', '🫶 进行中', '安心陪伴模式', '默契度'])
-inspect('f', ['💻 开发运行时', '🟢 就绪', '🧩 编码中', '工程模式', '实现进度'])
+inspect('a', ['🐾 小窝状态', '元气值', '超开心', '陪伴中', '超可爱模式', '"variant":"ring"'])
+inspect('b', ['🧭 专注模式', '处理中', '当前任务', '低干扰', '"flat":true'])
+inspect('c', ['🧠 Agent 控制台', '🔍 分析', '🛠️ 执行', '✅ 校验', '可靠结果'])
+inspect('d', ['🚀 神经甲板', '推理深度', '核心功率', '深度思考', '"spark"'])
+inspect('e', ['☕ 暖心小站', '温柔陪伴中', '默契度', '安心模式'])
+inspect('f', ['🧩 正在编码', '构建', '测试', '实现进度', '"mono":true'])
 
 inspect('bootstrap', ['Ready', 'Processing', 'Current task'], 'en')
-inspect('a', ['🌸 AI Status', '😊 Happy', '🐾 By your side', 'Super Cute Mode', 'Cuteness'], 'en')
-inspect('b', ['🧭 Focus', 'Ready', 'Processing', 'Current task', 'Focusing fully on your request.'], 'en')
-inspect('c', ['🧠 Agent Console', '🔍 Analysis', '🛠️ Execute', 'All Systems Normal', 'reliable result'], 'en')
-inspect('d', ['🚀 Neural Deck', '🟣 Online', '🛰️ Orchestrating', 'Deep Thinking', 'Reasoning path'], 'en')
-inspect('e', ['☕ Cozy Corner', '🥰 Gentle', '🫶 Present', 'Caring Companion', 'Rapport'], 'en')
-inspect('f', ['💻 Dev Runtime', '🟢 Ready', '🧩 Coding', 'Engineering Mode', 'Implementation'], 'en')
+inspect('a', ['🐾 Cozy Status', 'Energy', 'Happy', 'By your side', 'Super Cute Mode'], 'en')
+inspect('b', ['🧭 Focus', 'Processing', 'Current task', 'Low distraction'], 'en')
+inspect('c', ['🧠 Agent Console', '🔍 Analysis', '🛠️ Execute', '✅ Verify', 'reliable result'], 'en')
+inspect('d', ['🚀 Neural Deck', 'Reasoning', 'Core power', 'Deep Thinking'], 'en')
+inspect('e', ['☕ COZY CORNER', 'Gently here', 'Rapport', 'Calm Mode'], 'en')
+inspect('f', ['🧩 Coding', 'Build', 'Tests', 'Implementation', 'pnpm run check'], 'en')
+
+// Every preset stays inside fields GenUI actually reads, so a template edit
+// cannot silently ship an unknown-field warning into every reply.
+const ALLOWED = {
+  card: ['type', 'title', 'eyebrow', 'accent', 'flat', 'tone', 'items'],
+  grid: ['type', 'cols', 'items'], col: ['type', 'gap', 'items', 'width'],
+  row: ['type', 'items', 'wrap', 'spacer', 'justify'],
+  stat: ['type', 'label', 'value', 'delta', 'spark'],
+  progress: ['type', 'label', 'value', 'valueLabel', 'variant', 'target'],
+  badge: ['type', 'label', 'tone', 'icon'], keyvalue: ['type', 'pairs'], divider: ['type', 'label'],
+  text: ['type', 'size', 'content', 'tone', 'mono', 'align'],
+}
+for (const locale of ['zh', 'en']) {
+  for (const id of ['a', 'b', 'c', 'd', 'e', 'f']) {
+    const spec = createTemplateSpec(id, 'x', DEFAULT_CUSTOM_TEMPLATE, locale)
+    const walk = node => {
+      if (Array.isArray(node)) return node.forEach(walk)
+      if (node === null || typeof node !== 'object' || typeof node.type !== 'string') return
+      const allowed = ALLOWED[node.type]
+      assert.ok(allowed, `${locale}/${id}: unexpected component ${node.type}`)
+      for (const key of Object.keys(node)) assert.ok(allowed.includes(key), `${locale}/${id}: ${node.type}.${key} is not a GenUI field`)
+      if (node.type === 'stat') assert.ok([...node.value].length <= 6, `${locale}/${id}: stat value too long for display size: ${node.value}`)
+      if (node.type === 'badge') assert.ok(['success', 'warn', 'danger', 'accent'].includes(node.tone))
+      if (Array.isArray(node.items)) walk(node.items)
+    }
+    walk(spec.items)
+  }
+}
 
 const custom = createTemplateSpec('custom', '我的标题', DEFAULT_CUSTOM_TEMPLATE)
 assert.equal(custom.title, '我的标题')
@@ -62,4 +90,4 @@ assert.throws(() => parseCustomTemplate('{"items":[]}', 'x', 'en'), /non-empty i
 assert.deepEqual(TEMPLATE_OPTIONS.map(option => option.id), ['bootstrap', 'a', 'b', 'c', 'd', 'e', 'f', 'custom'])
 assert.equal(getTemplateOptions('zh')[1].label, 'A · 软萌活力')
 assert.equal(getTemplateOptions('en')[1].label, 'A · Soft Vitality')
-console.log('bilingual templates A-F and custom tests passed')
+console.log('bilingual templates A-F, GenUI field whitelist and custom tests passed')

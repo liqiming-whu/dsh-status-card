@@ -1,42 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="502" viewBox="0 0 1200 502" role="img" aria-labelledby="title desc">
   <title id="title">F · 开发者终端</title>
   <desc id="desc">dsh-status-card 中文模板展示图</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#06110d"/><stop offset="1" stop-color="#0d2620"/></linearGradient>
-    <linearGradient id="bar" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#10b981"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
-    <filter id="shadow" x="-10%" y="-20%" width="120%" height="150%"><feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity=".18"/></filter>
+    <linearGradient id="wash" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#10b981" stop-opacity="0.1"/><stop offset=".55" stop-color="#10b981" stop-opacity="0"/></linearGradient>
+    <filter id="shadow" x="-10%" y="-20%" width="120%" height="150%"><feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.18"/></filter>
   </defs>
-  <style>
-    text { font-family: Inter, "Segoe UI", "Microsoft YaHei", "Noto Sans CJK SC", "Segoe UI Emoji", sans-serif; fill: #e6fff5; }
-    .eyebrow { font-size: 20px; font-weight: 700; letter-spacing: .6px; }
-    .title { font-size: 30px; font-weight: 760; }
-    .label { font-size: 17px; font-weight: 600; fill: #80ad9d; }
-    .value { font-size: 24px; font-weight: 720; }
-    .badge { font-size: 18px; font-weight: 700; fill: #78f2bf; }
-    .progress { font-size: 17px; font-weight: 650; }
-    .footer { font-size: 18px; font-weight: 520; fill: #80ad9d; }
-  </style>
-  <rect width="1200" height="520" rx="28" fill="url(#bg)"/>
+  <style>text { font-family: Inter, "Segoe UI", "Microsoft YaHei", "Noto Sans CJK SC", "Segoe UI Emoji", sans-serif; }</style>
+  <rect width="1200" height="502" rx="28" fill="url(#bg)"/>
   <circle cx="1090" cy="46" r="120" fill="#10b981" opacity=".08"/>
-  <circle cx="110" cy="505" r="150" fill="#22d3ee" opacity=".07"/>
-  <text x="60" y="60" class="eyebrow">F · 开发者终端</text>
-  <rect x="58" y="88" width="1084" height="378" rx="25" fill="#0c1714" stroke="#275848" stroke-width="2" filter="url(#shadow)"/>
-  <text x="92" y="151" class="title">💻 开发运行时</text>
-  <rect x="800" y="119" width="300" height="42" rx="21" fill="#11372d"/>
-  <text x="950" y="146" class="badge" text-anchor="middle">🛠️ 工程模式</text>
-  
-    <rect x="92" y="205" width="296" height="90" rx="16" fill="#10211c" stroke="#275848"/>
-    <text x="112" y="234" class="label">构建</text>
-    <text x="112" y="272" class="value">🟢 就绪</text>
-    <rect x="422" y="205" width="296" height="90" rx="16" fill="#10211c" stroke="#275848"/>
-    <text x="442" y="234" class="label">任务</text>
-    <text x="442" y="272" class="value">🧩 编码中</text>
-    <rect x="752" y="205" width="296" height="90" rx="16" fill="#10211c" stroke="#275848"/>
-    <text x="772" y="234" class="label">CPU</text>
-    <text x="772" y="272" class="value">⚡ 87%</text>
-  <text x="92" y="337" class="progress">实现进度</text>
-  <text x="1090" y="337" class="progress" text-anchor="end">76%</text>
-  <rect x="92" y="354" width="998" height="14" rx="7" fill="#275848" opacity=".55"/>
-  <rect x="92" y="354" width="758" height="14" rx="7" fill="url(#bar)"/>
-  <text x="600" y="417" class="footer" text-anchor="middle">正在分析代码、验证改动并准备交付。</text>
+  <circle cx="110" cy="487" r="150" fill="#10b981" opacity=".06"/>
+  <text x="60" y="60" font-size="20" fill="#e6fff5" font-weight="700" letter-spacing=".4">F · 开发者终端 · 构建 / 测试 / Diff 终端</text>
+  <rect x="58" y="88" width="1084" height="362" rx="25" fill="#0c1714" stroke="#10b981" stroke-opacity="0.45" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="58" y="88" width="1084" height="362" rx="25" fill="url(#wash)"/>
+  <text x="92" y="124" font-size="16" fill="#10b981" font-weight="700" letter-spacing="1.2">💻 DEV RUNTIME · main</text><text x="92" y="172" font-size="30" fill="#10b981" font-weight="760">🧩 正在编码</text><rect x="92" y="196" width="328" height="112" rx="14" fill="#10b981" fill-opacity=".07"/><text x="110" y="226" font-size="16" fill="#80ad9d" font-weight="600">🏗️ 构建</text><text x="110" y="266" font-size="34" fill="#e6fff5" font-weight="760">OK</text><text x="110" y="292" font-size="15" fill="#16a34a" font-weight="600">+tsc 通过</text><rect x="436" y="196" width="328" height="112" rx="14" fill="#10b981" fill-opacity=".07"/><text x="454" y="226" font-size="16" fill="#80ad9d" font-weight="600">🧪 测试</text><text x="454" y="266" font-size="34" fill="#e6fff5" font-weight="760">12/12</text><text x="454" y="292" font-size="15" fill="#16a34a" font-weight="600">+全部通过</text><rect x="780" y="196" width="328" height="112" rx="14" fill="#10b981" fill-opacity=".07"/><text x="798" y="226" font-size="16" fill="#80ad9d" font-weight="600">📝 改动</text><text x="798" y="266" font-size="34" fill="#e6fff5" font-weight="760">+48</text><text x="798" y="292" font-size="15" fill="#dc2626" font-weight="600">-12</text><text x="92" y="346" font-size="17" fill="#e6fff5" font-weight="650">实现进度</text><text x="1108" y="346" font-size="17" fill="#e6fff5" font-weight="700" text-anchor="end">76%</text><rect x="92" y="360" width="1016" height="12" rx="6" fill="#1d3a31"/><rect x="92" y="360" width="772.2" height="12" rx="6" fill="#10b981"/><text x="92" y="410" font-size="16" fill="#16a34a" font-family="ui-monospace, Consolas, &quot;Cascadia Mono&quot;, monospace" font-weight="520">$ pnpm run check  # 正在验证改动</text>
 </svg>

@@ -79,6 +79,11 @@ export function buildStatusCardInstruction(settings: StatusCardSettings): string
     'Use suitable emoji as icons, and dynamically adjust status text, progress values, and the short message to match the current task. Keep the card polished, concise, and compact.',
     'All visible text in the status card must be in English. Do not explain the card protocol or wrap the dsh-ui fence inside another code block. Use this specification as the reference:',
   ]
+  if (settings.template === 'd' || settings.template === 'f') {
+    rules.splice(-1, 0, locale === 'zh'
+      ? '参考规格中的数值与命令仅为排版示例。延迟、分支、测试结果、改动行数等须有本次任务的观测依据；没有数据时写“未测”或“—”，并省略趋势线，不要虚构运行记录。'
+      : 'Numbers and commands in the reference are layout examples. Report latency, branches, tests or line changes only when observed for this task; otherwise use “Not measured” or “—” and omit the sparkline. Do not invent run results.')
+  }
   return [...rules, '```dsh-ui', JSON.stringify(spec), '```'].join('\n')
 }
 

@@ -18,9 +18,9 @@ const englishPrompt = buildStatusCardInstruction({ ...config, locale: 'en', card
 assert.ok(englishPrompt.startsWith('At the very beginning of every reply'))
 assert.ok(englishPrompt.includes('All visible text in the status card must be in English'))
 assert.ok(englishPrompt.includes('AI Status'))
-assert.ok(englishPrompt.includes('💻 Dev Runtime'))
-assert.ok(englishPrompt.includes('Engineering Mode'))
-assert.ok(!englishPrompt.includes('正在分析代码'))
+assert.ok(englishPrompt.includes('💻 DEV RUNTIME'))
+assert.ok(englishPrompt.includes('🧩 Coding'))
+assert.ok(!englishPrompt.includes('正在编码'))
 
 assert.equal(detectPreferredLocale(['zh-CN', 'en-US']), 'zh')
 assert.equal(detectPreferredLocale(['zh-TW']), 'zh')
